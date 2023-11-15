@@ -56,10 +56,10 @@ body {
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
+	margin: 50px 0;
 }
 section {
-	margin: 50px 0
+	margin: 50px 0;
 }
 
 h1{
@@ -68,22 +68,22 @@ h1{
 	font-family: 'Syne';
 	font-size: 22px;
 	font-weight: 800;
-	color: #B1663C
+	color: #B1663C;
 }
-
 h1 > span {
 	font-family: 'Work Sans';
 	font-size:10px;
 	letter-spacing: 0.1em;
-;
 }
 
 h2{
 	font-family: 'Syne';
 	font-weight: 700;
 	font-size: 30px;
-	color: #1D6154
+	color: #1D6154;
 }
+
+/* Navigation bar on right top */
 nav ul {
 	display: flex;
 	align-items: center;
@@ -98,6 +98,8 @@ nav li {
 li:hover {
 	color: #B1663C;
 }
+
+/* Intro Section */
 #introduction {
 	display: flex;
 	align-items: center;
@@ -110,21 +112,46 @@ li:hover {
 	margin: auto;
 	width: 80%;
 }
-
 #introduction article {
 	flex: 1
 }
 #introduction h2 {
 	margin-bottom: 1em;
 }
-
 #introduction p {
 	margin-bottom: 0.5em;
 }
+
+/* Portfolio Section */
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
 }
+
+/* Filtre Button in Portfolio */
+.filtres {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+.filtreBtn {
+	background-color: white;
+	color: #1D6154;
+	border-color: #1D6154;
+	border-radius: 60px;
+	font-family: Syne;
+	font-style: normal;
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 19px;
+	text-align: center;
+	margin: 10px;
+	height: 40px;
+	min-width: 100px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
 .gallery {
 	width: 100%;
 	display: grid;

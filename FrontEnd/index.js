@@ -6,6 +6,9 @@ async function getApiCategories() {
       if (!getApiCategories.ok) {
         throw Error('Network response was not ok');
       }
+      if (getApiCategories.ok) {
+         console.log('données récupérées avec succès')
+      };
       const dataCatagories = await getApiCategories.json();
       console.log('Categories from API:', dataCatagories)
       return dataCatagories; 
@@ -14,6 +17,7 @@ async function getApiCategories() {
    }
 }
 getApiCategories();  //call function
+
 // Get the DataSource Works from the server API
 async function getApiWorks() {
    try {
@@ -22,6 +26,9 @@ async function getApiWorks() {
       if (!getApiWorks.ok) {
          throw Error('Works request failed');
       }
+      if (getApiWorks.ok) {
+         console.log('données récupérées avec succès')
+      };
       const dataWorks = await getApiWorks.json();
       console.log('Works from API:', dataWorks)
       return dataWorks;
@@ -31,62 +38,117 @@ async function getApiWorks() {
 }
 getApiWorks();   //call function
 
-// get the DOM elements
-const portfolio = document.getElementById("portfolio");
-// remove the figure elements from Html
-// figures.forEach((figure, index) => {
-//    if (index > 0) {
-//       figure.remove();
-//    }
-// });
+// For treating the callback data
+async function fetchData() {
+   try {
+     const categories = await getApiCategories(); // receive Categories Data  
+     const works = await getApiWorks(); // receive Works Data
+     // collecting all API Datas therfore retrieving by other function
+     updateGallery(works); // calling updateGallery function
+     filtreByCategories(categories,works); // calling filreByCategories function 
+   } catch (error) {
+     console.error('Error fetching data:', error);
+   }
+}
+fetchData(); // calling fetchData function
+
 const gallery = document.querySelector(".gallery");
 gallery.id = 'galleryid';
 const galleryId = document.getElementById("galleryid");
 
 // // Update portfolio works in gallery
-let updateGallery = (works) => {
-   
+const updateGallery = (works) => {
    console.log(works)
-   const figures = galleryId.querySelectorAll("figure");
-   document.getElementById("galleryid").innerHTML = '';  // clear actual gallery elements
+   // const figures = galleryId.querySelectorAll("figure");
+   // document.getElementById("galleryid").innerHTML = '';
+   gallery.innerHTML = '';  // clear actual gallery elements
 
-   for (let i=0; i<figures.length; i++) {
+   // for (let i=0; i<figures.length; i++) {
+   works.forEach(work=> {
       const figure = document.createElement("figure");
       const figureImg = document.createElement("img");
       const figcaption = document.createElement("figcaption"); 
-      figureImg.src = works[i].imageUrl;
-      figureImg.alt = works[i].title;
-      figure.className = works[i].categoryId;
-      figcaption.innerText = works[i].title;
+      // figureImg.src = works[i].imageUrl;
+      // figureImg.alt = works[i].title;
+      // figure.className = works[i].categoryId;
+      // figcaption.innerText = works[i].title;
+      figureImg.src = work.imageUrl;
+      figureImg.alt = work.title;
+      figure.className = work.categoryId;
+      figcaption.innerText = work.title;
 
-      gallery.appendChild(figure);
       figure.appendChild(figureImg);
       figure.appendChild(figcaption);
-   }   
+      gallery.appendChild(figure);
+   });
 }
-// updateGallery(works);
 
-// 调用函数并处理返回的数据
-async function fetchData() {
-   try {
-     const categories = await getApiCategories(); // 获取分类数据
-     const works = await getApiWorks(); // 获取作品数据
-     // 在这里对获取的分类和作品数据进行进一步处理，或传递给其他函数进行操作
-     // 例如调用 updateGallery 或其他操作函数进行界面更新等
-     updateGallery(works); // 示例调用 updateGallery 函数来更新作品展示
-     // ... 其他操作
-   } catch (error) {
-     console.error('Error fetching data:', error);
-   }
- }
- 
- // 调用 fetchData 函数来获取并处理数据
- fetchData();
+// Classify the works
+const filtreByCategories = (categories,works) => {    
+   const portfolio = document.getElementById("portfolio");
+   const classment = document.createElement('div');
+   classment.classList.add('filtres');
 
+   // create the Button 'Tous'
+   const buttonTous = document.createElement('button');
+   buttonTous.classList.add('filtreBtn');
+   buttonTous.innerText = 'Tous';
+   buttonTous.setAttribute('id', 'all');
+   classment.appendChild(buttonTous);
+   portfolio.insertBefore(classment, gallery);
 
+   const uniqueSetOfWorks = new Set(works.map(work => work.categoryId)); 
 
+   // Create buttons for each unique category ID
+   uniqueSetOfWorks.forEach(categoryId => {
+      const btn = document.createElement('button');
+      const category = categories.find(cat => cat.id === categoryId);
+      btn.classList.add('filtreBtn');
+      btn.innerText = category ? category.name : 'Unknown Category';
+      btn.setAttribute('id', categoryId);
+      classment.appendChild(btn);
 
+      btn.addEventListener('click', function() {
+         console.log('Button clicked')
+         const categoryIdN = parseInt(this.getAttribute('id'));
 
- 
+         const worksFiltres = works.filter(work => work.categoryId === categoryIdN);
+         console.log('Works filtered:', worksFiltres); 
+         document.getElementById("galleryid").innerHTML = '';
+         updateGallery(worksFiltres);        
+      });
+   });
 
- 
+   // click the button 'Tous'
+   buttonTous.addEventListener('click', function() {
+      updateGallery(works);
+   }); 
+}
+//    // click the button 'Tous'
+//    buttonTous.addEventListener('click', function() {
+//       console.log ('id:', all)
+//       updateGallery(works);
+//    }); 
+   
+//    // create other categories buttons
+//    for (let i=0; i < categories.length; i++) {
+//       const btn = document.createElement('button');
+//       btn.classList.add('filtreBtn');
+//       btn.innerText = categories[i].name;
+//       btn.setAttribute('id', categories[i].id);
+//       classment.appendChild(btn);
+      
+//       // click the other categories buttons
+//       btn.addEventListener('click', function() {       
+//          const categoryIdN = parseInt(this.getAttribute('id'));
+
+//          const worksFiltres = works.filter(function(work) {
+            
+//             return work.categoryId === categoryIdN;
+//          })
+//       document.getElementById("galleryid").innerHTML = '';
+//       filtreByCategories(worksFiltres);
+//       });
+//    };
+// }
+

@@ -23,7 +23,9 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
+
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
@@ -46,13 +48,26 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
 /** end reset css**/
+
 body {
 	max-width: 1140px;
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
 }
+
+a {
+	text-decoration: none;
+	color: #000;
+}
+a:hover {
+	color: #B1663C;
+}
+
+/* HEADER */
+
 header {
 	display: flex;
 	justify-content: space-between;
@@ -84,6 +99,7 @@ h2{
 }
 
 /* Navigation bar on right top */
+
 nav ul {
 	display: flex;
 	align-items: center;
@@ -95,17 +111,18 @@ nav li {
 	font-size: 1.2em;
 }
 
-li:hover {
+/* li a:hover {
 	color: #B1663C;
-}
+} */
 
-/* Intro Section */
+/* Introduction Section */
+
 #introduction {
 	display: flex;
 	align-items: center;
 }
 #introduction figure {
-	flex: 1
+	flex: 1;
 }
 #introduction img {
 	display: block;
@@ -113,7 +130,7 @@ li:hover {
 	width: 80%;
 }
 #introduction article {
-	flex: 1
+	flex: 1;
 }
 #introduction h2 {
 	margin-bottom: 1em;
@@ -123,16 +140,19 @@ li:hover {
 }
 
 /* Portfolio Section */
+
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
 }
 
-/* Filtre Button in Portfolio */
+/* Filtre Button in My Projects */
+
 .filtres {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
+	margin: 15px;
 }
 .filtreBtn {
 	background-color: white;
@@ -150,7 +170,15 @@ li:hover {
 	min-width: 100px;
 	padding-left: 10px;
 	padding-right: 10px;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
+.filtreBtn:hover { 
+	color:white;
+	background-color: #1D6154;
+}
+
+/* GAllery Section */
 
 .gallery {
 	width: 100%;
@@ -159,14 +187,15 @@ li:hover {
 	grid-column-gap: 20px;
 	grid-row-gap: 20px;
 }
-
 .gallery img {
 	width: 100%;
-
 }
+
+/* CONTACT SECTION */
+
 #contact {
 	width: 50%;
-margin: auto;
+	margin: auto;
 }
 #contact > * {
 	text-align: center;
@@ -181,21 +210,21 @@ margin: auto;
 	display: flex;
 	flex-direction: column;
 }
-
-#contact input {
+#contact input,
+.login-form input {
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
-#contact label {
+#contact label, 
+.login-form label {
 	margin: 2em 0 1em 0;
 }
 #contact textarea {
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
-
 input[type="submit"]{
 	font-family: 'Syne';
 	font-weight: 700;
@@ -207,9 +236,32 @@ input[type="submit"]{
 	border-radius: 60px ;
 }
 
+/* FOOTER */
+
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
+	margin: 2em;
 }
 
+/* LOGIN PAGE */
+
+.login-section, h2 {
+	 text-align: center;
+	 margin: 40px;
+}
+.login-form {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.login-form label {
+	width: 40%;
+}
+.login-form a {
+	text-decoration: underline;
+}
+#emailInput, #passwordInput {
+	width: 40%;
+}

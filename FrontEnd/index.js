@@ -56,7 +56,7 @@ const gallery = document.querySelector(".gallery");
 gallery.id = 'galleryid';
 const galleryId = document.getElementById("galleryid");
 
-// // Update portfolio works in gallery
+// Update portfolio works & gallery
 const updateGallery = (works) => {
    console.log(works)
    // const figures = galleryId.querySelectorAll("figure");
@@ -76,7 +76,7 @@ const updateGallery = (works) => {
       figureImg.alt = work.title;
       figure.className = work.categoryId;
       figcaption.innerText = work.title;
-
+      // attatched figure into the gallery
       figure.appendChild(figureImg);
       figure.appendChild(figcaption);
       gallery.appendChild(figure);
@@ -94,25 +94,28 @@ const filtreByCategories = (categories,works) => {
    buttonTous.classList.add('filtreBtn');
    buttonTous.innerText = 'Tous';
    buttonTous.setAttribute('id', 'all');
+   // attatched the elements
    classment.appendChild(buttonTous);
    portfolio.insertBefore(classment, gallery);
 
+   // use the object Set to retreive only works categorys ID
    const uniqueSetOfWorks = new Set(works.map(work => work.categoryId)); 
 
-   // Create buttons for each unique category ID
+   // Create catogorys buttons 
    uniqueSetOfWorks.forEach(categoryId => {
       const btn = document.createElement('button');
       const category = categories.find(cat => cat.id === categoryId);
       btn.classList.add('filtreBtn');
       btn.innerText = category ? category.name : 'Unknown Category';
       btn.setAttribute('id', categoryId);
+      // attatched the elements
       classment.appendChild(btn);
 
       btn.addEventListener('click', function() {
          console.log('Button clicked')
          const categoryIdN = parseInt(this.getAttribute('id'));
-
          const worksFiltres = works.filter(work => work.categoryId === categoryIdN);
+         
          console.log('Works filtered:', worksFiltres); 
          document.getElementById("galleryid").innerHTML = '';
          updateGallery(worksFiltres);        

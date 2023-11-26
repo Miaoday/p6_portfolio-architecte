@@ -65,6 +65,27 @@ a {
 a:hover {
 	color: #B1663C;
 }
+/* Admin Bar */
+
+.admin-bar {
+	background-color:#000;
+	height: 59px;
+	width: 100%;
+}
+
+.modeEdition {
+	text-align: center;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	color: white;
+	display: flex;
+	justify-content: center;
+	padding: 21px;
+	cursor: pointer;
+}
+
 
 /* HEADER */
 
@@ -144,6 +165,14 @@ nav li {
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
+}
+
+.modifier {
+	gap: 10px;
+	display: flex;
+	justify-content: center;
+	transform: translate(168px, -50px);
+	cursor: pointer;
 }
 
 /* Filtre Button in My Projects */

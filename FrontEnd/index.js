@@ -1,3 +1,6 @@
+// const { loginRequest } = require ('./login');
+// import {loginRequest} from "./login";
+// loginRequest(userData);
 // Get the DataSource Categories from the server API
 async function getApiCategories() {  
    try {
@@ -16,6 +19,7 @@ async function getApiCategories() {
       console.log('Fetch categories error:', error)
    }
 }
+
 getApiCategories();  //call function
 
 // Get the DataSource Works from the server API
@@ -53,14 +57,12 @@ async function fetchData() {
 fetchData(); // calling fetchData function
 
 const gallery = document.querySelector(".gallery");
-gallery.id = 'galleryid';
+// gallery.id = 'galleryid';
 const galleryId = document.getElementById("galleryid");
 
 // Update portfolio works & gallery
 const updateGallery = (works) => {
    console.log(works)
-   // const figures = galleryId.querySelectorAll("figure");
-   // document.getElementById("galleryid").innerHTML = '';
    gallery.innerHTML = '';  // clear actual gallery elements
 
    // for (let i=0; i<figures.length; i++) {
@@ -68,10 +70,6 @@ const updateGallery = (works) => {
       const figure = document.createElement("figure");
       const figureImg = document.createElement("img");
       const figcaption = document.createElement("figcaption"); 
-      // figureImg.src = works[i].imageUrl;
-      // figureImg.alt = works[i].title;
-      // figure.className = works[i].categoryId;
-      // figcaption.innerText = works[i].title;
       figureImg.src = work.imageUrl;
       figureImg.alt = work.title;
       figure.className = work.categoryId;
@@ -117,7 +115,7 @@ const filtreByCategories = (categories,works) => {
          const worksFiltres = works.filter(work => work.categoryId === categoryIdN);
          
          console.log('Works filtered:', worksFiltres); 
-         document.getElementById("galleryid").innerHTML = '';
+         // document.getElementById("galleryid").innerHTML = '';
          updateGallery(worksFiltres);        
       });
    });
@@ -127,31 +125,3 @@ const filtreByCategories = (categories,works) => {
       updateGallery(works);
    }); 
 }
-//    // click the button 'Tous'
-//    buttonTous.addEventListener('click', function() {
-//       console.log ('id:', all)
-//       updateGallery(works);
-//    }); 
-   
-//    // create other categories buttons
-//    for (let i=0; i < categories.length; i++) {
-//       const btn = document.createElement('button');
-//       btn.classList.add('filtreBtn');
-//       btn.innerText = categories[i].name;
-//       btn.setAttribute('id', categories[i].id);
-//       classment.appendChild(btn);
-      
-//       // click the other categories buttons
-//       btn.addEventListener('click', function() {       
-//          const categoryIdN = parseInt(this.getAttribute('id'));
-
-//          const worksFiltres = works.filter(function(work) {
-            
-//             return work.categoryId === categoryIdN;
-//          })
-//       document.getElementById("galleryid").innerHTML = '';
-//       filtreByCategories(worksFiltres);
-//       });
-//    };
-// }
-

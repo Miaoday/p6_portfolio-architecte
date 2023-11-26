@@ -9,8 +9,6 @@
    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
    <meta name="description" content="Sophie Bluel - Architecte d'intérieur">
    <link rel="stylesheet" href="./assets/style.css">
-   <script src="../FrontEnd/index.js" defer></script>
-   <script src="./login.js" defer></script>
 </head>    
 <body>
 <header>
@@ -27,13 +25,15 @@
 <main>
    <div classe="login-section">
       <h2>Log In</h2>
+      
       <form class="login-form" method="post" action="#" >
-            <label for="emailUser">E-mail</label>
-            <input type="email" id="emailInput" autocomplete="on">
-            <label for="password">Mot de passe</label>
-            <input type="password" id="passwordInput" autocomplete="on">
-            <input type="submit" value="Se connecter">
-            <a href="#">Mot de passe oublié</a>
+         <div id="error"><span></span></div>
+         <label for="emailInput">E-mail</label>
+         <input type="email" id="emailInput" autocomplete="on">
+         <label for="passwordInput">Mot de passe</label>
+         <input type="password" id="passwordInput" autocomplete="on">
+         <input type="submit" id="submitConnected" value="Se connecter">
+         <a href="#">Mot de passe oublié</a>
       </form>
    </div>
 </main>
@@ -46,6 +46,6 @@
 	</nav>
 </footer>
 
-
+<script src="./login.js" type="module"></script>
 </body>
 </html>

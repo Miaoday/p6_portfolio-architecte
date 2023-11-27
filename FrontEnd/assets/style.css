@@ -65,6 +65,7 @@ a {
 a:hover {
 	color: #B1663C;
 }
+
 /* Admin Bar */
 
 .admin-bar {
@@ -85,7 +86,6 @@ a:hover {
 	padding: 21px;
 	cursor: pointer;
 }
-
 
 /* HEADER */
 
@@ -162,16 +162,30 @@ nav li {
 
 /* Portfolio Section */
 
+.modalBtn {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: baseline;
+}
+
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
 }
 
-.modifier {
+#modifier {
+	border: none;
+	background-color: transparent;
+	text-align: center;
+	font-family: Work Sans;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
 	gap: 10px;
 	display: flex;
 	justify-content: center;
-	transform: translate(168px, -50px);
 	cursor: pointer;
 }
 
@@ -233,19 +247,24 @@ nav li {
 #contact h2{
 	margin-bottom: 20px;
 }
-#contact form {
+
+#contact form,
+.modal-window form {
 	text-align: left;
-	margin-top:30px;
+	margin-top: 30px;
 	display: flex;
 	flex-direction: column;
 }
+
 #contact input,
-.login-form input {
+.login-form input,
+.updat-photo input{
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
+
 #contact label, 
 .login-form label {
 	margin: 2em 0 1em 0;
@@ -254,7 +273,8 @@ nav li {
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
-input[type="submit"]{
+
+input[type="submit"] {
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
@@ -273,24 +293,91 @@ footer nav ul {
 	margin: 2em;
 }
 
+/* Modal Window */
+.modal-window {
+	box-sizing: border-box;
+}
+
+.modal {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background: rgba(0, 0, 0, 0.6);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	display: none;
+}
+
+.modal-wrapper {
+	background-color: white;
+	width: 50%;
+	height: 50%;
+	max-width: 630px;
+	max-height: 688px;
+	border-radius: 10px;
+	top: 50%;
+	left: 50%;
+	padding: 30px;
+}
+
+.close-modal {
+	border: none;
+	background: none;
+	margin-left: 95%;
+	cursor: pointer;
+}
+
+h3 {
+	text-align: center;
+	font-family: Work Sans;
+	font-size: 26px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	margin: 5px;
+}
+
+.modal-window form {
+	text-align: center;
+	margin-top: 0;
+}
+
+#ajouterPhoto {
+	padding: 10px 40px;
+	margin: auto;
+	width: 40%;
+	position: relative;
+	top:10px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+
 /* LOGIN PAGE */
 
 .login-section, h2 {
 	 text-align: center;
 	 margin: 40px;
 }
+
 .login-form {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }
+
 .login-form label {
 	width: 40%;
 }
+
 .login-form a {
 	text-decoration: underline;
 }
+
 #emailInput, #passwordInput {
 	width: 40%;
 }

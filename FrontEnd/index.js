@@ -1,6 +1,4 @@
-// const { loginRequest } = require ('./login');
-// import {loginRequest} from "./login";
-// loginRequest(userData);
+
 // Get the DataSource Categories from the server API
 async function getApiCategories() {  
    try {
@@ -19,8 +17,7 @@ async function getApiCategories() {
       console.log('Fetch categories error:', error)
    }
 }
-
-getApiCategories();  //call function
+// getApiCategories();  //call function
 
 // Get the DataSource Works from the server API
 async function getApiWorks() {
@@ -40,7 +37,7 @@ async function getApiWorks() {
       console.log('Fetch works error:', error)
    }
 }
-getApiWorks();   //call function
+// getApiWorks();   //call function
 
 // For treating the callback data
 async function fetchData() {

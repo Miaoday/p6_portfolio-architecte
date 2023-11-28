@@ -44,6 +44,7 @@ async function fetchData() {
    try {
      const categories = await getApiCategories(); // receive Categories Data  
      const works = await getApiWorks(); // receive Works Data
+
      // collecting all API Datas therfore retrieving by other function
      updateGallery(works); // calling updateGallery function
      filtreByCategories(categories,works); // calling filreByCategories function 
@@ -54,15 +55,12 @@ async function fetchData() {
 fetchData(); // calling fetchData function
 
 const gallery = document.querySelector(".gallery");
-// gallery.id = 'galleryid';
 const galleryId = document.getElementById("galleryid");
 
 // Update portfolio works & gallery
 const updateGallery = (works) => {
    console.log(works)
    gallery.innerHTML = '';  // clear actual gallery elements
-
-   // for (let i=0; i<figures.length; i++) {
    works.forEach(work=> {
       const figure = document.createElement("figure");
       const figureImg = document.createElement("img");
@@ -94,10 +92,10 @@ const filtreByCategories = (categories,works) => {
    portfolio.insertBefore(classment, gallery);
 
    // use the object Set to retreive only works categorys ID
-   const uniqueSetOfWorks = new Set(works.map(work => work.categoryId)); 
+   const setOfWorksId = new Set(works.map(work => work.categoryId)); 
 
    // Create catogorys buttons 
-   uniqueSetOfWorks.forEach(categoryId => {
+   setOfWorksId.forEach(categoryId => {
       const btn = document.createElement('button');
       const category = categories.find(cat => cat.id === categoryId);
       btn.classList.add('filtreBtn');
@@ -108,17 +106,23 @@ const filtreByCategories = (categories,works) => {
 
       btn.addEventListener('click', function() {
          console.log('Button clicked')
-         const categoryIdN = parseInt(this.getAttribute('id'));
-         const worksFiltres = works.filter(work => work.categoryId === categoryIdN);
-         
+         const categoryIdNb = parseInt(this.getAttribute('id'));
+         const worksFiltres = works.filter(work => work.categoryId === categoryIdNb);         
          console.log('Works filtered:', worksFiltres); 
-         // document.getElementById("galleryid").innerHTML = '';
+         // calling function
          updateGallery(worksFiltres);        
       });
    });
-
    // click the button 'Tous'
    buttonTous.addEventListener('click', function() {
       updateGallery(works);
    }); 
 }
+
+// Token status setting for the admin page
+const filtreBtn = document.querySelectorAll ('.filtreBtn')
+const titlePortfolio = document.querySelector('modal-bar')
+
+
+
+

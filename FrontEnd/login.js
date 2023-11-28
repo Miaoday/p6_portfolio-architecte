@@ -62,10 +62,13 @@ async function loginRequest(userData) {
 
       });
 
-      if(response.ok) {
+      if(response.status===200) {
          const userData = await response.json();
          localStorage.setItem('token',userData.token);
          console.log('Request Succeded');
+         
+         alert();
+         window.location.replace("./index.html");
          return userData; 
       
          // then store the response in the data
@@ -102,8 +105,7 @@ submit.addEventListener('click', (e)=>{
    const userData = {email: email, password: password};
    console.log(userData)
    loginRequest(userData)
-   alert();
-   window.location.replace("./index.html");
+   
    
 });
 

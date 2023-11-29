@@ -72,6 +72,7 @@ a:hover {
 	background-color:#000;
 	height: 59px;
 	width: 100vw;
+	visibility: hidden;
 }
 
 .edition-mode {
@@ -187,7 +188,7 @@ nav li {
 	display: flex;
 	justify-content: center;
 	cursor: pointer;
-	/* display: none; */
+	visibility: hidden;
 }
 
 /* Filtre Button in My Projects */

@@ -122,27 +122,34 @@ const adminNav = document.getElementById('admin-nav');
 const logInOut= document.getElementById('log-in-out');
 const titlePortfolio = document.querySelector('.portfolio-title');
 const modalButton = document.getElementById('modal-btn');
-const filtreSection = document.getElementById('filtres');
-const filtreBtn = document.querySelectorAll('.filtreBtn');
+// const filtreSection = document.getElementById('filtres');
+// const filtreBtn = document.querySelectorAll('.filtreBtn');
 let token = localStorage.getItem('token');
 console.log('Token value:', token)
-console.log(filtreBtn.style)
-// token === null ? adminNav.remove() : adminNav.style.display = "block";
+console.log(modalButton.style)
 
-if (token===null){
-   adminNav.remove();
-   modalButton.style.display = "none";
-   // filtreSection.style.display = "flex";   
-   logInOut.innerHTML="logout";
-} else {
+
+// token === null? adminNav.style.display ="none": adminNav.style.display = "block";
+// token === null? modalButton.style.display ="none": modalButton.style.display = "flex";
+if (token){
    adminNav.style.display = "block";
    modalButton.style.display = "flex";
-   // filtreSection.style.display = "none";
-   filtreBtn.forEach(btn =>{
-      btn.style.display = "none";
-   })
-   console.log(filtreBtn.style);
+   logInOut.innerHTML="logout";
 }
+// if (token===null){
+//    adminNav.remove();
+//    modalButton.style.display = "none";
+// //    // filtreSection.style.display = "flex";   
+//    logInOut.innerHTML="logout";
+// } else {
+//    adminNav.style.display = "block";
+//    modalButton.style.display = "flex";
+//    // filtreSection.style.display = "none";
+//    // filtreBtn.forEach(btn =>{
+//    //    btn.style.display = "none";
+//    // })
+// //    console.log(filtreBtn.style);
+// }
 
 // function logout(){};
 

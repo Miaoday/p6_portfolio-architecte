@@ -91,22 +91,18 @@ submit.addEventListener('click', (e)=>{
    let password = document.getElementById('passwordInput').value;
    
    if (!email.match(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/i)) {
-      document.getElementById('error').innerHTML =
-      'Email not found';
+      document.getElementById('error').innerHTML ='Email not found';
       error.classList.add('error');
       return false;
 
    } else if(!password){
-      document.getElementById('error').innerHTML =
-      'Password incorrect';
+      document.getElementById('error').innerHTML ='Password incorrect';
       error.classList.add('error');
       return false;
    }
    const userData = {email: email, password: password};
    console.log(userData)
    loginRequest(userData)
-   
-   
 });
 
 

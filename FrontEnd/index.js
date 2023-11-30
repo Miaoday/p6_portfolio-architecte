@@ -1,4 +1,3 @@
-
 // Get the DataSource Categories from the server API
 async function getApiCategories() {  
    try {
@@ -17,7 +16,6 @@ async function getApiCategories() {
       console.log('Fetch categories error:', error)
    }
 }
-// getApiCategories();  //call function
 // Get the DataSource Works from the server API
 async function getApiWorks() {
    try {
@@ -36,21 +34,51 @@ async function getApiWorks() {
       console.log('Fetch works error:', error)
    }
 }
-// getApiWorks();   //call function
 // For treating the callback data
 async function fetchData() {
    try {
      const categories = await getApiCategories(); // receive Categories Data  
      const works = await getApiWorks(); // receive Works Data
-
      // collecting all API Datas therfore retrieving by other function
      updateGallery(works); // calling updateGallery function
      filtreByCategories(categories,works); // calling filreByCategories function 
-   } catch (error) {
+   } 
+   catch (error) {
      console.error('Error fetching data:', error);
    }
 }
 fetchData(); // calling fetchData function
+
+// Token status setting for the Admin page
+const adminNav = document.getElementById('admin-nav');
+const logInOut= document.getElementById('log-in-out');
+const titlePortfolio = document.querySelector('.portfolio-title');
+const modalButton = document.getElementById('modal-btn');
+const filtreBtn = document.querySelectorAll('.filtreBtn');
+
+let token = localStorage.getItem('token');
+console.log('Token value:', token)
+
+if (token){
+   adminNav.style.visibility = "visible";
+   modalButton.style.visibility= "visible";
+   logInOut.innerHTML="logout";   
+}
+
+function logOut(){
+   if(token===null){
+      console.log('Token value is null')
+      window.location.reload('./login.html');
+   } else {
+      localStorage.clear();
+      window.location.reload('./index.html');
+   }
+};
+
+logInOut.addEventListener("click",(e)=>{
+   logOut();
+
+})
 
 const gallery = document.querySelector(".gallery");
 const galleryId = document.getElementById("galleryid");
@@ -76,10 +104,8 @@ const updateGallery = (works) => {
 
 // Classify the works
 const filtreByCategories = (categories,works) => {    
-   const portfolio = document.getElementById("portfolio");
-   const classment = document.createElement('div');
-   classment.setAttribute('id','filtres');
-
+   const classment = document.getElementById("filtres");
+   
    // create the Button 'Tous'
    const buttonTous = document.createElement('button');
    buttonTous.classList.add('filtreBtn');
@@ -87,9 +113,9 @@ const filtreByCategories = (categories,works) => {
    buttonTous.setAttribute('id', 'all');
    // attatched the elements
    classment.appendChild(buttonTous);
-   portfolio.insertBefore(classment, gallery);
+   // portfolio.insertBefore(classment, gallery);
 
-   // use the object Set to retreive only works categorys ID
+   // use the New object Set to retreive works categorys ID
    const setOfWorksId = new Set(works.map(work => work.categoryId)); 
 
    // Create catogorys buttons 
@@ -115,43 +141,13 @@ const filtreByCategories = (categories,works) => {
    buttonTous.addEventListener('click', function() {
       updateGallery(works);
    }); 
+
+   const hideBtns = document.querySelectorAll('.filtreBtn').forEach(btn => {
+      if(token){
+         btn.style.display = "none";
+      }
+   });
 }
-
-// Token status setting for the Admin page
-const adminNav = document.getElementById('admin-nav');
-const logInOut= document.getElementById('log-in-out');
-const titlePortfolio = document.querySelector('.portfolio-title');
-const modalButton = document.getElementById('modal-btn');
-// const filtreSection = document.getElementById('filtres');
-// const filtreBtn = document.querySelectorAll('.filtreBtn');
-let token = localStorage.getItem('token');
-console.log('Token value:', token)
-console.log(modalButton.style)
-
-
-// token === null? adminNav.style.display ="none": adminNav.style.display = "block";
-// token === null? modalButton.style.display ="none": modalButton.style.display = "flex";
-if (token){
-   adminNav.style.display = "block";
-   modalButton.style.display = "flex";
-   logInOut.innerHTML="logout";
-}
-// if (token===null){
-//    adminNav.remove();
-//    modalButton.style.display = "none";
-// //    // filtreSection.style.display = "flex";   
-//    logInOut.innerHTML="logout";
-// } else {
-//    adminNav.style.display = "block";
-//    modalButton.style.display = "flex";
-//    // filtreSection.style.display = "none";
-//    // filtreBtn.forEach(btn =>{
-//    //    btn.style.display = "none";
-//    // })
-// //    console.log(filtreBtn.style);
-// }
-
-// function logout(){};
 
 
 

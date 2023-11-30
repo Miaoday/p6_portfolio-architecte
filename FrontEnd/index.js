@@ -149,6 +149,20 @@ const filtreByCategories = (categories,works) => {
    });
 }
 
+// Modal window settings
+
+const modalWindow = document.querySelector('.modal-window');
+const modalWrapper = document.querySelector('.modal-wrapper');
+const modalTriggers = document.querySelectorAll('.modal-trigger');
+
+modalTriggers.forEach(trigger =>
+   trigger.addEventListener("click", toggleModal));
+
+function toggleModal () {
+   modalWindow.classList.toggle("active")
+}
+
+
 
 
 

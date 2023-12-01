@@ -72,7 +72,7 @@ a:hover {
 	background-color:#000;
 	height: 59px;
 	width: 100vw;
-	visibility: hidden;
+	display: none;
 	
 }
 
@@ -321,7 +321,7 @@ footer nav ul li {
 .modal-wrapper {
 	background-color: white;
 	width: 50%;
-	height: 50%;
+	height: 80%;
 	max-width: 630px;
 	max-height: 688px;
 	border-radius: 10px;

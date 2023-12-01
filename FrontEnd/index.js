@@ -60,7 +60,7 @@ let token = localStorage.getItem('token');
 console.log('Token value:', token)
 
 if (token){
-   adminNav.style.visibility = "visible";
+   adminNav.style.display = "block";
    modalButton.style.visibility= "visible";
    logInOut.innerHTML="logout";   
 }
@@ -71,7 +71,7 @@ function logOut(){
       window.location.reload('./login.html');
    } else {
       localStorage.clear();
-      window.location.reload('./index.html');
+      window.location.replace('./index.html');
    }
 };
 
@@ -150,7 +150,6 @@ const filtreByCategories = (categories,works) => {
 }
 
 // Modal window settings
-
 const modalWindow = document.querySelector('.modal-window');
 const modalWrapper = document.querySelector('.modal-wrapper');
 const modalTriggers = document.querySelectorAll('.modal-trigger');
@@ -161,6 +160,9 @@ modalTriggers.forEach(trigger =>
 function toggleModal () {
    modalWindow.classList.toggle("active")
 }
+
+// Export the gallery into the modal window
+
 
 
 

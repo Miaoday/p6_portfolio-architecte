@@ -57,6 +57,44 @@ submit.addEventListener('click', (e)=>{
    loginRequest(userData)
 });
 
+// Token status setting for the Admin page
+// const adminNav = document.getElementById('admin-nav');
+// const logInOut= document.getElementById('log-in-out');
+// const titlePortfolio = document.querySelector('.portfolio-title');
+// const modalButton = document.getElementById('modal-btn');
+// const filtreBtn = document.querySelectorAll('.filtreBtn');
+
+// let token = localStorage.getItem('token');
+// console.log('Token value:', token)
+
+// if (token){
+//    adminNav.style.visibility = "visible";
+//    modalButton.style.visibility= "visible";
+//    logInOut.innerHTML="logout";   
+// }
+
+// function logOut(){
+//    if(token===null){
+//       console.log('Token value is null')
+//       window.location.reload('./login.html');
+//    } else {
+//       localStorage.clear();
+//       window.location.replace('./index.html');
+//    }
+// };
+
+// logInOut.addEventListener("click",(e)=>{
+//    logOut();
+
+// })
+
+
+
+
+
+
+
+
 // une function ca fait un travail 
 // Ici on a une fonction. En entrée on a deux paramètres a et b
 // En sortie on a le resultat a + b

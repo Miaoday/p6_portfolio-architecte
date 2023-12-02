@@ -176,6 +176,7 @@ nav li {
 	margin-bottom: 1em;
 }
 
+/* Modal Window */
 .open-modal {
 	border: none;
 	background-color: transparent;
@@ -190,6 +191,75 @@ nav li {
 	justify-content: center;
 	cursor: pointer;
 	visibility: hidden;
+}
+.modal-section {
+	box-sizing: border-box;
+}
+.modal-window {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background: rgba(0, 0, 0, 0.6);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	visibility: hidden;
+	/* display: none; */
+}
+.modal-window.active {
+	visibility: visible;
+	/* display: flex; */
+}
+.modal-wrapper {
+	background-color: white;
+	width: 50%;
+	height: 80%;
+	max-width: 630px;
+	max-height: 688px;
+	border-radius: 10px;
+	top: 50%;
+	left: 50%;
+	padding: 30px;
+}
+.close-modal {
+	border: none;
+	background: none;
+	margin-left: 95%;
+	cursor: pointer;
+}
+h3 {
+	text-align: center;
+	font-family: Work Sans;
+	font-size: 26px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	margin: 5px;
+}
+/* .modal-window form {
+	text-align: center;
+	margin-top: 0;
+} */
+#ajouterPhoto {
+	/* height: 50px; */
+	font-size: 14px;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	padding: 10px 40px;
+	/* position: relative;
+	top: 200px; */
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
+	margin : 2em auto ;
+	max-width: 237px;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	border-radius: 60px ;
 }
 
 /* Filtre Button in My Projects */
@@ -294,68 +364,6 @@ footer nav ul {
 footer nav ul li {
 	font-size: 14px;
 	line-height: normal;
-}
-
-/* Modal Window */
-.modal-section {
-	box-sizing: border-box;
-}
-
-.modal-window {
-	position: fixed;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	left: 0;
-	background: rgba(0, 0, 0, 0.6);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	visibility: hidden;
-	/* display: none; */
-}
-.modal-window.active {
-	visibility: visible;
-	/* display: flex; */
-}
-.modal-wrapper {
-	background-color: white;
-	width: 50%;
-	height: 80%;
-	max-width: 630px;
-	max-height: 688px;
-	border-radius: 10px;
-	top: 50%;
-	left: 50%;
-	padding: 30px;
-}
-.close-modal {
-	border: none;
-	background: none;
-	margin-left: 95%;
-	cursor: pointer;
-}
-h3 {
-	text-align: center;
-	font-family: Work Sans;
-	font-size: 26px;
-	font-style: normal;
-	font-weight: 400;
-	line-height: normal;
-	margin: 5px;
-}
-.modal-window form {
-	text-align: center;
-	margin-top: 0;
-}
-#ajouterPhoto {
-	padding: 10px 40px;
-	/* margin: auto; */
-	width: 40%;
-	position: relative;
-	top: 200px;
-	overflow: hidden;
-	text-overflow: ellipsis;
 }
 
 /* LOGIN PAGE */

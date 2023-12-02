@@ -68,7 +68,7 @@ if (token){
 function logOut(){
    if(token===null){
       console.log('Token value is null')
-      window.location.reload('./login.html');
+      window.location.replace('./login.html');
    } else {
       localStorage.clear();
       window.location.replace('./index.html');

@@ -161,10 +161,38 @@ function toggleModal () {
    modalWindow.classList.toggle("active")
 }
 
-// Export the gallery into the modal window
+// Import the project into the modal window
 
+const displayModal= () => {
+   try{
+      const works = fetchData();  // make sure works had initiated
+      console.log(fetchData)
+      console.log(works);     
+      const editGallery = document.getElementById('edit-modal');
+         editGallery.innerHTML = '';  // clear actual gallery elements
+         works.forEach(work=> {  
+            const figure = document.createElement("figure");
+            const figureImg = document.createElement("img");
+            figureImg.src = work.imageUrl;
+            figureImg.alt = work.title;
+            figure.className = work.categoryId;
+         
+            // attatched figure into the gallery
+            figure.appendChild(figureImg);
+            editGallery.appendChild(figure);
+            
+         }); 
+            
+   } catch (error) {
+      console.log(error);
+   }
+   
+}
+displayModal();
 
-
+const addProject = document.getElementById('add-photo');
+// ajouterPhoto.addEventListener("click",(event) =>{
+// })
 
 
 

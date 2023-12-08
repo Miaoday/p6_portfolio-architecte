@@ -95,7 +95,6 @@ const trashBtns = document.querySelectorAll('.fa-trash-can').forEach((trashBtn) 
          let figure = this.parentNode;
          let projectId = figure.id;
          
-
          const response =
             await fetch (`http://localhost:5678/api/works/${projectId}`, {
                method: 'DELETE',
@@ -132,8 +131,8 @@ const trashBtns = document.querySelectorAll('.fa-trash-can').forEach((trashBtn) 
       }     
    });     
 });
-console.log(projectId);
-console.log('clicked trash buttons');
+// console.log(projectId);
+// console.log('clicked trash buttons');
 
 // Token status setting for the Admin page
 const adminNav = document.getElementById('admin-nav');

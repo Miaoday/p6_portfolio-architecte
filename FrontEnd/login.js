@@ -88,17 +88,3 @@ submit.addEventListener('click', (e)=>{
 
 // })
 
-
-
-
-
-
-
-
-// une function ca fait un travail 
-// Ici on a une fonction. En entrée on a deux paramètres a et b
-// En sortie on a le resultat a + b
-// function addition (a, b) {
-//    return a + b
-//  }
-//  const resultat = addition(5, 4)

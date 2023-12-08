@@ -206,21 +206,16 @@ nav li {
 	justify-content: center;
 	align-items: center;
 	visibility: hidden;
-	/* display: none; */
 }
 .modal-window.active {
 	visibility: visible;
-	/* display: flex; */
 }
 .modal-wrapper {
 	background-color: white;
-	width: 50%;
-	height: 80%;
+	width: 100%;
 	max-width: 630px;
 	max-height: 688px;
 	border-radius: 10px;
-	top: 50%;
-	left: 50%;
 	padding: 30px;
 }
 .close-modal {
@@ -238,12 +233,33 @@ h3 {
 	line-height: normal;
 	margin: 5px;
 }
-/* .modal-window form {
+#edit-modal {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	gap: 2em 0.8em;
+	margin: 3.3em;
+}
+
+#edit-modal > figure img {
+	height: fit-content;
+	width: 100%;
+}
+#edit-modal> figure i {	
+	font-size: 12px;
+	color:white;
+	background-color: #000;
+	border-radius: 2px;
+	padding-top: 5px;
+	height: 17px;
+	width: 17px;
 	text-align: center;
-	margin-top: 0;
-} */
+	position: absolute;
+	transform: translate(-25px, 8px);
+
+	
+}
+
 #add-photo {
-	/* height: 50px; */
 	font-size: 14px;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);

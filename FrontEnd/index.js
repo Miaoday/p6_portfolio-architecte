@@ -16,6 +16,7 @@ async function getApiCategories() {
       console.log('Fetch categories error:', error)
    }
 }
+
 // Get the DataSource Works from the server API
 async function getApiWorks() {
    try {
@@ -34,6 +35,7 @@ async function getApiWorks() {
       console.log('Fetch works error:', error)
    }
 }
+
 // For treating the callback data
 async function fetchData() {
    try {
@@ -42,12 +44,96 @@ async function fetchData() {
      // collecting all API Datas therfore retrieving by other function
      updateGallery(works); // calling updateGallery function
      filtreByCategories(categories,works); // calling filreByCategories function 
+     return { categories, works };
    } 
    catch (error) {
      console.error('Error fetching data:', error);
    }
 }
-fetchData(); // calling fetchData function
+// fetchData(); // calling fetchData function
+
+// Import the project into the Modal Window
+let trashBin;
+const displayModal = async() => {
+   try{
+      const {works} = await fetchData();  // make sure works had initiated
+      console.log(works);       
+      const editGallery = document.getElementById('edit-modal');
+      editGallery.innerHTML = '';  // clear actual gallery elements
+      
+      works.forEach (work=> {  
+         const figure = document.createElement("figure");
+         const figureImg = document.createElement("img");
+         const trashbin = document.createElement("i");
+         figure.id = work.id;
+         figureImg.src = work.imageUrl;
+         figureImg.alt = work.title;
+         figure.className = work.categoryId;
+         trashbin.className += "fa-regular fa-trash-can";   
+         // attatched figure into the gallery
+         figure.appendChild(figureImg);
+         figure.appendChild(trashbin);
+         editGallery.appendChild(figure);
+      }); 
+      return works; 
+   } catch (error) {
+      console.log(error);
+      return [];
+   }
+}
+displayModal().then(works => {
+   console.log(works);
+}).catch(error => {
+   console.error(error);
+});
+
+// Delete the project with trashbin
+const trashBtns = document.querySelectorAll('.fa-trash-can').forEach((trashBtn) => {
+   
+   trashBtn.addEventListener ('click', async function(e) {
+      try {
+         let figure = this.parentNode;
+         let projectId = figure.id;
+         
+
+         const response =
+            await fetch (`http://localhost:5678/api/works/${projectId}`, {
+               method: 'DELETE',
+               headers: {
+                  Authorization: 'Bearer ${token}',
+                  'Content-Type': 'application/json'
+               }
+            });
+           
+               if (response.status===204){
+                  figure.remove();
+                  // let figureElement = figure.id;
+                  // let deleteFigure = document.getElementById(figureElement);          
+                  // deleteFigure.remove();
+                  console.log('image deleted successfully');    
+                           
+               } else if (response.status===401){
+                  console.error('Unauthorized: You do not have permission to delete this image.');
+                  // statusOfResponse = response.status;
+                  // alertModalGallery.style.display = "flex";
+                  // alertModalGallery.innerHTML =
+                  // "Vous n'avez pas les autorisations pour effacer le fichier, statut " + resStatus;               
+               } else {
+                  console.error('Failed to delete image:', deleteResponse.status);
+                  // tatusOfResponse = response.status;
+                  // console.error('failed to delete image:', response.status);
+                  // alertModalGallery.style.display = "flex";
+                  // alertModalGallery.innerHTML =
+                  // "Impossible d'effacer le fichier, problème d'accès à l'API." + resStatus;
+               } 
+   
+      } catch (error){
+         console.error('Error deleting project:', error);
+      }     
+   });     
+});
+console.log(projectId);
+console.log('clicked trash buttons');
 
 // Token status setting for the Admin page
 const adminNav = document.getElementById('admin-nav');
@@ -61,8 +147,8 @@ console.log('Token value:', token)
 
 if (token){
    adminNav.style.display = "block";
-   modalButton.style.visibility= "visible";
-   logInOut.innerHTML="logout";   
+   modalButton.style.visibility = "visible";
+   logInOut.innerHTML = "logout";   
 }
 
 function logOut(){
@@ -85,12 +171,12 @@ const galleryId = document.getElementById("galleryid");
 
 // Update portfolio works & gallery
 const updateGallery = (works) => {
-   console.log(works)
    gallery.innerHTML = '';  // clear actual gallery elements
    works.forEach(work=> {
       const figure = document.createElement("figure");
       const figureImg = document.createElement("img");
       const figcaption = document.createElement("figcaption"); 
+      figure.id = work.id;
       figureImg.src = work.imageUrl;
       figureImg.alt = work.title;
       figure.className = work.categoryId;
@@ -113,7 +199,6 @@ const filtreByCategories = (categories,works) => {
    buttonTous.setAttribute('id', 'all');
    // attatched the elements
    classment.appendChild(buttonTous);
-   // portfolio.insertBefore(classment, gallery);
 
    // use the New object Set to retreive works categorys ID
    const setOfWorksId = new Set(works.map(work => work.categoryId)); 
@@ -161,38 +246,7 @@ function toggleModal () {
    modalWindow.classList.toggle("active")
 }
 
-// Import the project into the modal window
-
-const displayModal= () => {
-   try{
-      const works = fetchData();  // make sure works had initiated
-      console.log(fetchData)
-      console.log(works);     
-      const editGallery = document.getElementById('edit-modal');
-         editGallery.innerHTML = '';  // clear actual gallery elements
-         works.forEach(work=> {  
-            const figure = document.createElement("figure");
-            const figureImg = document.createElement("img");
-            figureImg.src = work.imageUrl;
-            figureImg.alt = work.title;
-            figure.className = work.categoryId;
-         
-            // attatched figure into the gallery
-            figure.appendChild(figureImg);
-            editGallery.appendChild(figure);
-            
-         }); 
-            
-   } catch (error) {
-      console.log(error);
-   }
-   
-}
-displayModal();
-
 const addProject = document.getElementById('add-photo');
 // ajouterPhoto.addEventListener("click",(event) =>{
 // })
-
-
 

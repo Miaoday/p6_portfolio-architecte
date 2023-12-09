@@ -54,25 +54,26 @@ async function fetchData() {
 
 // Import the project into the Modal Window
 let trashBin;
-const displayModal = async() => {
+const editGallery = document.getElementById('edit-modal');
+async function displayModal () {
    try{
       const {works} = await fetchData();  // make sure works had initiated
-      console.log(works);       
-      const editGallery = document.getElementById('edit-modal');
+      console.log(works);        
       editGallery.innerHTML = '';  // clear actual gallery elements
-      
       works.forEach (work=> {  
          const figure = document.createElement("figure");
          const figureImg = document.createElement("img");
-         const trashbin = document.createElement("i");
+         const trashIcon = document.createElement("i");
          figure.id = work.id;
          figureImg.src = work.imageUrl;
          figureImg.alt = work.title;
+         figureImg.crossOrigin = "anonymous";
          figure.className = work.categoryId;
-         trashbin.className += "fa-regular fa-trash-can";   
+         trashIcon.className += "fa-regular fa-trash-can";   
+         trashIcon.setAttribute('id','trash');
          // attatched figure into the gallery
          figure.appendChild(figureImg);
-         figure.appendChild(trashbin);
+         figure.appendChild(trashIcon);
          editGallery.appendChild(figure);
       }); 
       return works; 
@@ -81,59 +82,63 @@ const displayModal = async() => {
       return [];
    }
 }
+
 displayModal().then(works => {
    console.log(works);
-}).catch(error => {
-   console.error(error);
-});
 
-// Delete the project with trashbin
-const trashBtns = document.querySelectorAll('.fa-trash-can').forEach((trashBtn) => {
-   
-   trashBtn.addEventListener ('click', async function(e) {
-      try {
-         let figure = this.parentNode;
-         let projectId = figure.id;
-         
-         const response =
-            await fetch (`http://localhost:5678/api/works/${projectId}`, {
+   // Delete the project with trashbin
+   const trashBtns = document.querySelectorAll('.fa-trash-can');
+   console.log(trashBtns); 
+   [...trashBtns].forEach(trash=>{
+      trash.addEventListener ('click', function(e) {
+         try {
+            let figure = this.parentNode;
+            let projectId = figure.id;
+            console.log(projectId);
+            async function getDelet() {
+               await fetch (`http://localhost:5678/api/works/${projectId}`, {
                method: 'DELETE',
                headers: {
                   Authorization: 'Bearer ${token}',
                   'Content-Type': 'application/json'
                }
-            });
-           
-               if (response.status===204){
-                  figure.remove();
-                  // let figureElement = figure.id;
-                  // let deleteFigure = document.getElementById(figureElement);          
-                  // deleteFigure.remove();
-                  console.log('image deleted successfully');    
-                           
-               } else if (response.status===401){
-                  console.error('Unauthorized: You do not have permission to delete this image.');
-                  // statusOfResponse = response.status;
-                  // alertModalGallery.style.display = "flex";
-                  // alertModalGallery.innerHTML =
-                  // "Vous n'avez pas les autorisations pour effacer le fichier, statut " + resStatus;               
-               } else {
-                  console.error('Failed to delete image:', deleteResponse.status);
-                  // tatusOfResponse = response.status;
-                  // console.error('failed to delete image:', response.status);
-                  // alertModalGallery.style.display = "flex";
-                  // alertModalGallery.innerHTML =
-                  // "Impossible d'effacer le fichier, problème d'accès à l'API." + resStatus;
-               } 
-   
-      } catch (error){
-         console.error('Error deleting project:', error);
-      }     
-   });     
-});
-// console.log(projectId);
-// console.log('clicked trash buttons');
+               });
+            }
+            getDelet.then(function (response){
 
+            if (response.status===204){
+               figure.remove();
+               // let figureElement = figure.id;
+               // let deleteFigure = document.getElementById(figureElement);          
+               // deleteFigure.remove();
+               console.log('image deleted successfully');    
+                        
+            } else if (response.status===401){
+               console.error('Unauthorized: You do not have permission to delete this image.');
+               // statusOfResponse = response.status;
+               // alertModalGallery.style.display = "flex";
+               // alertModalGallery.innerHTML =
+               // "Vous n'avez pas les autorisations pour effacer le fichier, statut " + resStatus;               
+            } else {
+               console.error('Failed to delete image:', response.status);
+               // tatusOfResponse = response.status;
+               // console.error('failed to delete image:', response.status);
+               // alertModalGallery.style.display = "flex";
+               // alertModalGallery.innerHTML =
+               // "Impossible d'effacer le fichier, problème d'accès à l'API." + resStatus;
+            } 
+            });
+            getDelet();
+
+      } catch (error){
+               console.error('Error deleting project:', error);
+            }     
+   })
+}).catch(error => {
+   console.error(error);
+});
+});
+  
 // Token status setting for the Admin page
 const adminNav = document.getElementById('admin-nav');
 const logInOut= document.getElementById('log-in-out');
@@ -150,7 +155,8 @@ if (token){
    logInOut.innerHTML = "logout";   
 }
 
-function logOut(){
+function logOut() {
+
    if(token===null){
       console.log('Token value is null')
       window.location.replace('./login.html');
@@ -169,17 +175,19 @@ const gallery = document.querySelector(".gallery");
 const galleryId = document.getElementById("galleryid");
 
 // Update portfolio works & gallery
-const updateGallery = (works) => {
+function updateGallery (works) {
    gallery.innerHTML = '';  // clear actual gallery elements
    works.forEach(work=> {
       const figure = document.createElement("figure");
       const figureImg = document.createElement("img");
-      const figcaption = document.createElement("figcaption"); 
+      const figcaption = document.createElement("figcaption");  
       figure.id = work.id;
       figureImg.src = work.imageUrl;
       figureImg.alt = work.title;
+      figureImg.crossOrigin = "anonymous";
       figure.className = work.categoryId;
       figcaption.innerText = work.title;
+
       // attatched figure into the gallery
       figure.appendChild(figureImg);
       figure.appendChild(figcaption);
@@ -188,9 +196,8 @@ const updateGallery = (works) => {
 }
 
 // Classify the works
-const filtreByCategories = (categories,works) => {    
-   const classment = document.getElementById("filtres");
-   
+function filtreByCategories (categories,works) {    
+   const classment = document.getElementById("filtres"); 
    // create the Button 'Tous'
    const buttonTous = document.createElement('button');
    buttonTous.classList.add('filtreBtn');

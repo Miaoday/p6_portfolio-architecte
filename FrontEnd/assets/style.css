@@ -341,13 +341,14 @@ hr {
 	font-weight: 700;
 	color: white;
 	background-color: #1D6154;
-	margin : 2em auto ;
+	margin : 2em auto;
 	max-width: 237px;
 	display: flex;
 	flex-direction: column;
-	text-align: center;
+	align-items: center;
 	border-radius: 60px;
 	cursor: pointer;
+   transform: translateY(-45px);
 }
 .add-file{
    cursor: pointer;
@@ -355,7 +356,23 @@ hr {
 .add-file input[type="image"][name="image"] {
    display: none;
 }
-
+#submit-project {
+   max-width: 237px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border-radius: 60px;
+	cursor: pointer;
+   font-size: 14px;
+	border: none;
+   padding: 10px 40px;
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+   margin : 2em auto;
+   background-color: #A7A7A7;
+   visibility: hidden;
+}
 
 /* Filtre Button in My Projects Gallery */
 

@@ -247,12 +247,16 @@ const modalGallery = document.getElementById('modal-gallery');
 const addProject = document.getElementById('add-photo');
 const inputModal = document.getElementById('input-modal');
 const returnBtn = document.querySelector('.toggle-return');
+const addProjectBtn = document.getElementById('add-photo');
+const submitProjectBtn = document.getElementById('submit-project');
 function addFileClicked () {
 addProject.addEventListener("click",() => {
    console.log("addProject button clicked")
    modalGallery.style.display = "none";
    inputModal.style.display = "block";  
    returnBtn.style.visibility = "visible";
+   addProjectBtn.style.visibility = "hidden";
+   submitProjectBtn.style.visibility ="visible";
 });
 }
 addFileClicked();
@@ -263,6 +267,8 @@ returnBtn.addEventListener("click",() => {
    modalGallery.style.display = "block";
    inputModal.style.display = "none";  
    returnBtn.style.visibility = "hidden";
+   addProjectBtn.style.visibility ="visible";
+   submitProjectBtn.style.visibility ="hidden";
 });
 }
 returnBtnClicked();

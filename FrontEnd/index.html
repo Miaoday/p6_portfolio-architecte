@@ -53,15 +53,49 @@
       <div class="modal-section"> 
          <aside class="modal-window modal-trigger" role="dialog" aria-labelledby="modalTitle" aria-describedby="modalDialogueDescription">
             <div class="modal-wrapper modal-trigger">
-               <button aria-label="close modal" type="button" class="close-modal modal-trigger">
-                  <i class="fa-solid fa-xmark"></i>
-               </button>                       
-               <h3 id="modalTitle">Galerie photo</h3>
+               <div class="modal-head-btn">
+                  <button aria-label="return modal" type="button" id="toggle-return" class="toggle-return">
+                     <i class="fa-solid fa-arrow-left"></i>					
+                  </button>    
+                  <button aria-label="close modal" type="button" class="close-modal modal-trigger">
+                     <i class="fa-solid fa-xmark"></i>
+                  </button> 
+               </div>                      
                <div id="modal-gallery">
+                  <h3 id="modal-title">Galerie photo</h3>
                   <div id="edit-modal"></div>
                </div>
+               <div id="input-modal">
+                  <h3 id="modal-title">Ajout photo</h3>
+				      <form action="#" method="post" id="modal-form">
+                     <label for="image" id="label-img">                                                      
+                        <div class="input-file-box">
+                           <i class="fa-regular fa-image fa-5x file-img"></i>
+                           <button type="button" class="add-file">   
+                              <h4>
+                                 <input id="input-file" type="image" name="image" accept="image/jpg, image/png" size="4000000" aria-label="submit">
+                                 +Ajouter photo
+                              </h4>                         
+                           </button>
+                           <p>jpg, png : 4mo max</p>
+                        </div>
+                     </label>
+                     <label for="title" id="label-title">Titre</label>
+                     <input type="text" name="titre" id="input-file-title">
+                     <label for="select-category" id="label-category">Catégorie</label>
+                     <select name="select-category" id="select-category">
+                        <option value="0"></option>
+                        <option value="1">Objet</option>
+                        <option value="2">Appartement</option>
+                        <option value="3">Bar & Restaurant</option>
+                     </select>
+                  </form>
+			      </div>
+
+			      <hr />
                <button type="button" id="add-photo">Ajouter une photo</button>           
             </div>
+			
          </aside>
       </div>
       <div id="filtres"></div>

@@ -45,13 +45,13 @@ async function fetchData() {
    } catch (error) {
      console.error('Error fetching data:', error);
    }
-   //   displayModal().then(works => {
-   //    console.log(works);  
-   // }).catch(error => {
-   //    console.error(error);
-   // });
 }
-fetchData();
+// fetchData();
+displayModal().then(works => {
+console.log(works);  
+}).catch(error => {
+console.error(error);
+});
 
 // HomePageSetting
 // Classify the works with the categories buttons
@@ -66,10 +66,12 @@ function filtreByCategories (categories,works) {
    classment.appendChild(buttonTous);
 
    // use the New object Set to retreive works categorys ID
-   const setOfWorksId = new Set(works.map(work => work.categoryId)); 
+   const newsetWorksId = new Set(works.map(function (work){ 
+      return work.categoryId; 
+   })); 
 
    // Create catogorys buttons 
-   setOfWorksId.forEach(categoryId => {
+   newsetWorksId.forEach(categoryId => {
       const btn = document.createElement('button');
       const category = categories.find(cat => cat.id === categoryId);
       btn.classList.add('filtreBtn');
@@ -92,7 +94,7 @@ function filtreByCategories (categories,works) {
       updateGallery(works);
    }); 
 
-   const hideBtns = document.querySelectorAll('.filtreBtn').forEach(btn => {
+   document.querySelectorAll('.filtreBtn').forEach(btn => {
       if(token){
          btn.style.display = "none";
       }
@@ -173,7 +175,7 @@ async function displayModal () {
    try{
       const {works} = await fetchData();  // make sure works had initiated
       console.log(works);        
-      editModal.innerHTML = '';  // clear actual gallery elements
+      // editModal.innerHTML = '';  // clear actual gallery elements
       works.forEach (work=> {  
          const figure = document.createElement("figure");
          const figureImg = document.createElement("img");
@@ -189,47 +191,47 @@ async function displayModal () {
          figure.appendChild(figureImg);
          figure.appendChild(trashBtn);
          editModal.appendChild(figure);
-
+         // get the trash can
          document.querySelectorAll('.fa-trash-can').forEach((trashBtn)=> {                
             trashBtn.addEventListener('click', deletWork)   
             // console.log(trashBtn);             
             // console.log('Click trashButton')                   
          }); 
-      return works; 
+         return works;       
       }); 
    }catch (error) {
-      console.log(error);
-      return [];  
+      console.log(error);        
 }
+return [];  
 }
-displayModal().then(works => {
-   console.log(works);  
-}).catch(error => {
-   console.error(error);
-});
+// displayModal().then(works => {
+//    console.log(works);
+// }).catch(error => {
+//    console.error(error);
+// });
 
 // Delete the project with trashbin
 async function deletWork(event) {
-   id = event.target.id;
+   let id = event.target.id;
    try{
       const response =
       await fetch (`http://localhost:5678/api/works/${id}`, {
       method: 'DELETE',
       headers: {
          Authorization: `Bearer ${token}`,
-         'Content-Type': 'application/json'
+         // 'Content-Type': 'application/json'
       }   
       });
   
    if (response.ok){
       // figure.remove();
-      console.log('Item deleted successfully');  
-      displayModal();
+      alert('Item deleted successfully');  
       fetchData();  
+      displayModal();
                
-   } else if (response.status===401){
+   } else if (response===401){
       console.error('Unauthorized: You do not have permission to delete this image.');            
-   } else if(response.status===500){
+   } else if(response===500){
       console.error('Unexpected Behavior:', response.status);
    } else {
       console.error('Delete failed :', response.status);
@@ -240,8 +242,30 @@ async function deletWork(event) {
    }
 }
 
-// setting Vierge Modal window
+// Active another Modal window
+const modalGallery = document.getElementById('modal-gallery');
 const addProject = document.getElementById('add-photo');
-// ajouterPhoto.addEventListener("click",(event) =>{
-// })
+const inputModal = document.getElementById('input-modal');
+const returnBtn = document.querySelector('.toggle-return');
+function addFileClicked () {
+addProject.addEventListener("click",() => {
+   console.log("addProject button clicked")
+   modalGallery.style.display = "none";
+   inputModal.style.display = "block";  
+   returnBtn.style.visibility = "visible";
+});
+}
+addFileClicked();
+// Return to Modal Gallery
+function returnBtnClicked(){
+returnBtn.addEventListener("click",() => {
+   console.log("retrun button clicked");
+   modalGallery.style.display = "block";
+   inputModal.style.display = "none";  
+   returnBtn.style.visibility = "hidden";
+});
+}
+returnBtnClicked();
+
+// Add the New Project button
 

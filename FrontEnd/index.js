@@ -260,6 +260,7 @@ addProject.addEventListener("click",() => {
 });
 }
 addFileClicked();
+
 // Return to Modal Gallery
 function returnBtnClicked(){
 returnBtn.addEventListener("click",() => {
@@ -273,5 +274,11 @@ returnBtn.addEventListener("click",() => {
 }
 returnBtnClicked();
 
-// Add the New Project button
+// Add the New Project 
+
+function addNewProject(){
+
+
+
+}
 

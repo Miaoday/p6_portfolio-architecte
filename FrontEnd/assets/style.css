@@ -277,7 +277,6 @@ h3 {
 }
 .fa-trash-can{
 	cursor: pointer;
-
 }
 #input-modal{
 	margin: 0 90px;
@@ -312,6 +311,20 @@ h3 {
 	color: #B9C5CC;
 	text-align: center;
 }
+.add-file {
+	border-radius: 50px;
+	background: #CBD6DC;
+	width: 173px;
+	height: 36px;
+	border: 0;
+   max-width: 173px;
+   width: 100%;
+   padding: 2px;
+   cursor: pointer;
+}
+.add-file input[type="image"][name="image"] {
+   display: none;
+}
 h4{
 	color: #306685;
 	text-align: center;
@@ -320,17 +333,30 @@ h4{
 	font-style: normal;
 	font-weight: 500;
 }
-.add-file {
-	border-radius: 50px;
-	background: #CBD6DC;
-	width: 173px;
-	height: 36px;
-	border: 0;
+#preview-img {
+   display: none;
 }
 hr {
 	color: #B3B3B3;
   	width: 70%;
 	margin-top: 40px;
+}
+#submit-project {
+   max-width: 237px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border-radius: 60px;
+	cursor: pointer;
+   font-size: 14px;
+	border: none;
+   padding: 10px 40px;
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+   margin : 2em auto;
+   background-color: #A7A7A7;
+   visibility: hidden;
 }
 #add-photo {
 	font-size: 14px;
@@ -349,29 +375,6 @@ hr {
 	border-radius: 60px;
 	cursor: pointer;
    transform: translateY(-45px);
-}
-.add-file{
-   cursor: pointer;
-}
-.add-file input[type="image"][name="image"] {
-   display: none;
-}
-#submit-project {
-   max-width: 237px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	border-radius: 60px;
-	cursor: pointer;
-   font-size: 14px;
-	border: none;
-   padding: 10px 40px;
-	font-family: 'Syne';
-	font-weight: 700;
-	color: white;
-   margin : 2em auto;
-   background-color: #A7A7A7;
-   visibility: hidden;
 }
 
 /* Filtre Button in My Projects Gallery */

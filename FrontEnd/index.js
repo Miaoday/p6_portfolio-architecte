@@ -275,10 +275,11 @@ returnBtn.addEventListener("click",() => {
 returnBtnClicked();
 
 // Add the New Project 
-
+const inputForm = document.getElementById('modal-form');
 function addNewProject(){
+   inputForm.addEventListener("submit",(event) => {
+      event.preventDefault();
 
-
-
+   })
 }
 

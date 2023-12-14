@@ -51,10 +51,10 @@
       </div>
       <!-- Fenêtre Modale -->
       <div class="modal-section"> 
-         <aside class="modal-window modal-trigger" role="dialog" aria-labelledby="modalTitle" aria-describedby="modalDialogueDescription">
+         <aside class="modal-window modal-trigger" role="dialog" aria-labelledby="modal-window" aria-describedby="modalDialogueDescription">
             <div class="modal-wrapper modal-trigger">
                <div class="modal-head-btn">
-                  <button aria-label="return modal" type="button" id="toggle-return" class="toggle-return">
+                  <button aria-label="return modal" type="button" id="return" class="return">
                      <i class="fa-solid fa-arrow-left"></i>					
                   </button>    
                   <button aria-label="close modal" type="button" class="close-modal modal-trigger">
@@ -64,6 +64,8 @@
                <div id="modal-gallery">
                   <h3 id="modal-title">Galerie photo</h3>
                   <div id="edit-modal"></div>
+                  <hr />
+                  <button type="button" id="add-project" class="add-project">Ajouter une photo</button>
                </div>
                <div id="input-modal">
                   <h3 id="modal-title">Ajout photo</h3>
@@ -91,14 +93,13 @@
                         <option value="3">Bar & Restaurant</option>
                      </select>
                   </form>
-			      </div>
-
-			      <hr />
-               <button type="button" id="submit-project">Valider</button>    
-               <button type="button" id="add-photo">Ajouter une photo</button>  
-                    
-            </div>
-			
+                  <hr />
+                  <button type="button" id="submit-project" class="submit-project">Valider</button> 
+			      
+               </div>
+			         
+                                    
+            </div>			
          </aside>
       </div>
       <div id="filtres"></div>

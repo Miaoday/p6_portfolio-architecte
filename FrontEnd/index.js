@@ -45,8 +45,9 @@ async function fetchData() {
    } catch (error) {
      console.error('Error fetching data:', error);
    }
+
 }
-// fetchData();
+
 displayModal().then(works => {
 console.log(works);  
 }).catch(error => {
@@ -154,7 +155,6 @@ function logOut() {
 
 logInOut.addEventListener("click",(e)=>{
    logOut();
-
 })
 
 // Modal window settings
@@ -164,9 +164,16 @@ const modalTriggers = document.querySelectorAll('.modal-trigger');
 
 modalTriggers.forEach(trigger =>
    trigger.addEventListener("click", toggleModal));
-
+   
 function toggleModal () {
-   modalWindow.classList.toggle("active")
+   modalWindow.classList.toggle("active");
+   if(modalWindow.classList.contains('active')){
+      returnPage();
+      // returnBtn.style.visibility = "visible";     
+   }else{
+      addFile();
+      // returnBtn.style.visibility = "hidden"; 
+   }
 }
 
 // Import the project into the Modal Window
@@ -193,7 +200,7 @@ async function displayModal () {
          editModal.appendChild(figure);
          // get the trash can
          document.querySelectorAll('.fa-trash-can').forEach((trashBtn)=> {                
-            trashBtn.addEventListener('click', deletWork)   
+            trashBtn.addEventListener('click', deleteWork)   
             // console.log(trashBtn);             
             // console.log('Click trashButton')                   
          }); 
@@ -204,22 +211,15 @@ async function displayModal () {
 }
 return [];  
 }
-// displayModal().then(works => {
-//    console.log(works);
-// }).catch(error => {
-//    console.error(error);
-// });
 
 // Delete the project with trashbin
-async function deletWork(event) {
+async function deleteWork(event) {
    let id = event.target.id;
    try{
-      const response =
-      await fetch (`http://localhost:5678/api/works/${id}`, {
+      const response = await fetch (`http://localhost:5678/api/works/${id}`, {
       method: 'DELETE',
       headers: {
          Authorization: `Bearer ${token}`,
-         // 'Content-Type': 'application/json'
       }   
       });
   
@@ -244,42 +244,66 @@ async function deletWork(event) {
 
 // Active another Modal window
 const modalGallery = document.getElementById('modal-gallery');
-const addProject = document.getElementById('add-photo');
+const closeBtn = document.querySelector('.close-modal');
+const addProjectBtn = document.getElementById('add-project');
 const inputModal = document.getElementById('input-modal');
-const returnBtn = document.querySelector('.toggle-return');
-const addProjectBtn = document.getElementById('add-photo');
+const returnBtn = document.querySelector('.return');
 const submitProjectBtn = document.getElementById('submit-project');
-function addFileClicked () {
-addProject.addEventListener("click",() => {
-   console.log("addProject button clicked")
-   modalGallery.style.display = "none";
+
+function addFile(){
+addProjectBtn.addEventListener("click",() => {
+   console.log("Add project button clicked")
    inputModal.style.display = "block";  
+   modalGallery.style.display = "none";
    returnBtn.style.visibility = "visible";
-   addProjectBtn.style.visibility = "hidden";
-   submitProjectBtn.style.visibility ="visible";
 });
 }
-addFileClicked();
-
+addFile();
 // Return to Modal Gallery
-function returnBtnClicked(){
+function returnPage(){
 returnBtn.addEventListener("click",() => {
-   console.log("retrun button clicked");
    modalGallery.style.display = "block";
-   inputModal.style.display = "none";  
+   inputModal.style.display = "none";    
    returnBtn.style.visibility = "hidden";
-   addProjectBtn.style.visibility ="visible";
-   submitProjectBtn.style.visibility ="hidden";
 });
 }
-returnBtnClicked();
 
-// Add the New Project 
+
+// // close modal window
+// function closeModalWindow(){
+//    closeBtn.addEventListener("click",() => {
+//       console.log("close button clicked");
+          
+//    });
+// }
+
+
+// Add the New Project in Modal Gallery
 const inputForm = document.getElementById('modal-form');
-function addNewProject(){
-   inputForm.addEventListener("submit",(event) => {
-      event.preventDefault();
 
-   })
+function addNewProject(){
+   inputForm.addEventListener("submit",async (event) => {
+      event.preventDefault();
+      const postData = new FormData(inputForm);
+      try {
+      await fetch("http://localhost:5678/api/works"),{
+         method: "POST",
+         body: postData,
+         headers:{
+            Authorization: `Bearer ${token}`,
+         }
+      }
+      if (response.ok){
+         console.log("New Projec submite successfully:", postData);
+         fetchData();  
+         displayModal();
+         inputForm.reset();
+
+      }else {
+         alert("New Projec submite failed:", postData);
+      }
+      }catch (error) {
+      }
+   });
 }
 

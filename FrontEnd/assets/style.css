@@ -225,7 +225,7 @@ nav li {
    justify-content: space-between;
    align-items: center;
 }
-.toggle-return{
+.return {
    width: 21px;
    height: 21px;
    color: #000;
@@ -234,6 +234,7 @@ nav li {
    cursor: pointer;
    visibility: hidden;
 }
+
 .close-modal {
    width: 24px;
    height: 24px;
@@ -241,9 +242,9 @@ nav li {
 	background: none;
    cursor: pointer;
 }
-#modal-gallery{
+/* #modal-gallery{
 	display: block;
-}
+} */
 h3 {
 	text-align: center;
 	font-family: Work Sans;
@@ -336,6 +337,9 @@ h4{
 #preview-img {
    display: none;
 }
+#select-category {
+   background-color: white;
+}
 hr {
 	color: #B3B3B3;
   	width: 70%;
@@ -356,9 +360,9 @@ hr {
 	color: white;
    margin : 2em auto;
    background-color: #A7A7A7;
-   visibility: hidden;
+   /* visibility: hidden; */
 }
-#add-photo {
+#add-project {
 	font-size: 14px;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
@@ -374,7 +378,6 @@ hr {
 	align-items: center;
 	border-radius: 60px;
 	cursor: pointer;
-   transform: translateY(-45px);
 }
 
 /* Filtre Button in My Projects Gallery */

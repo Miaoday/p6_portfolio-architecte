@@ -181,7 +181,6 @@ nav li {
 .open-modal {
 	border: none;
 	background-color: transparent;
-	text-align: center;
 	font-family: Work Sans;
 	font-size: 14px;
 	font-style: normal;
@@ -189,7 +188,6 @@ nav li {
 	line-height: normal;
 	gap: 10px;
 	display: flex;
-	justify-content: center;
 	cursor: pointer;
 	visibility: hidden;
 }
@@ -289,7 +287,7 @@ h3 {
 	flex-direction: column;
 	align-items: stretch;
 }
-.input-file-box{
+.input-file-box {
 	max-width: 420px;
 	max-height: 169px;
 	border-radius: 3px;
@@ -323,8 +321,10 @@ h3 {
    padding: 2px;
    cursor: pointer;
 }
-.add-file input[type="image"][name="image"] {
-   display: none;
+ input[type= "file" i]{
+   opacity: 0;
+   cursor: pointer;
+   transform: translateY(-10px);
 }
 h4{
 	color: #306685;
@@ -333,8 +333,9 @@ h4{
 	font-size: 14px;
 	font-style: normal;
 	font-weight: 500;
+   transform: translateY(6px);
 }
-#preview-img {
+#preview-file {
    display: none;
 }
 #select-category {
@@ -342,7 +343,6 @@ h4{
 }
 hr {
 	color: #B3B3B3;
-  	width: 70%;
 	margin-top: 40px;
 }
 #submit-project {
@@ -360,7 +360,6 @@ hr {
 	color: white;
    margin : 2em auto;
    background-color: #A7A7A7;
-   /* visibility: hidden; */
 }
 #add-project {
 	font-size: 14px;

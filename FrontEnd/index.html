@@ -70,14 +70,16 @@
                <div id="input-modal">
                   <h3 id="modal-title">Ajout photo</h3>
 				      <form action="#" method="post" id="modal-form" enctype="multipart/form-data">                                                               
-                     <div class="input-file-box">                 
-                        <i class="fa-regular fa-image fa-5x file-img"></i>                        
+                     <div class="input-file-box">                                 
+                        <i class="fa-regular fa-image fa-5x file-img">
+                           <img id="preview-file" src="#" alt="input_the_file">
+                        </i>                        
                         <button type="button" class="add-file">
                            <label for="image" id="label-img"> 
                               <h4>+Ajouter photo</h4>
                            </label>
                            <input id="input-file" type="file" name="image" accept="image/jpg, image/png" size="4000000" aria-label="submit">
-                           <img id="preview-file" href="#" alt="input_the_file">                                                                      
+                                                                                                 
                         </button>
                         <p>jpg, png : 4mo max</p>
                      </div>              

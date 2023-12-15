@@ -305,12 +305,30 @@ function addNewProject(){
    });
 }
 addNewProject();
-// Preview the project on the page
+
 const previewFile = document.getElementById('preview-file');
-const inputFile = document.getElementById('input-file');
-inputFile.addEventListener("change", treatFiles, false);
+const uploadFile = document.getElementById('input-file');
+
+//  Choose the Project File upload (input)
+uploadFile.addEventListener("change", treatFiles, false);
+console.log(uploadFile);
 
 function treatFiles() {
    const fileListe = this.files;
    console.log(fileListe);
+   console.log(this);
+
+}
+
+// Get the Files objects detail
+function readUrl(uploadFile) {
+   if (input.files && input.files[0]){
+      const reader = new FileReader();
+      reader.onload = function (){
+         // Link the file from <img>
+
+      }
+      // Preview the Image on the page
+      
+   }
 }

@@ -274,22 +274,24 @@ function closeReturnBtn(){
 }
 // addFilePage();
 // returnPage();  
+
 // Add the New Project in Modal Gallery
 const modalForm = document.getElementById('modal-form');
 
 function addNewProject(){
    modalForm.addEventListener("submit",async (event) => {
+      console.log(modalForm);
       event.preventDefault();
       const postData = new FormData(modalForm);
       try {
-      await fetch("http://localhost:5678/api/works"),{
+      const response = await fetch("http://localhost:5678/api/works",{
          method: "POST",
          body: postData,
          headers:{
             Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data"
          }
-      }
+      });
       if (response.ok){
          console.log("New Projec submite successfully:", postData);
          fetchData();  
@@ -308,8 +310,9 @@ addNewProject();
 
 const previewFile = document.getElementById('preview-file');
 const uploadFile = document.getElementById('input-file');
+const addFileBtn = document.querySelector('.add-file')
 
-//  Choose the Project File upload (input)
+//1. Clicked to choose the project file to upload (input)
 uploadFile.addEventListener("change", treatFiles, false);
 console.log(uploadFile);
 
@@ -317,18 +320,42 @@ function treatFiles() {
    const fileListe = this.files;
    console.log(fileListe);
    console.log(this);
-
+   readUrl(this);
 }
 
-// Get the Files objects detail
-function readUrl(uploadFile) {
-   if (input.files && input.files[0]){
+//2.Get and read the Files objects detail
+function readUrl(input) {
+   if (input.files && input.files[0]) {
       const reader = new FileReader();
-      reader.onload = function (){
-         // Link the file from <img>
-
+      reader.onload = function(e) {
+         console.log(e);
+         //4. Link the file with <img>
+         previewFile.src = e.target.result;
+         previewFile.style.visibility = ("visible");
+         addFileBtn.style.visibility = ("hidden");
       }
-      // Preview the Image on the page
-      
+      //3. Preview the file 
+      reader.readAsDataURL(input.files[0]);  
+      console.log(reader);      
    }
 }
+
+//Post the categorys
+async function postCategory () {
+   try{  
+      const {categories} = await fetchData();
+      const categorySelected = document.getElementById('selected-category');
+
+      categories.forEach((category) => {
+      const option = document.createElement('option');    
+      option.values = category.id;
+      option.textContent = category.name;
+      categorySelected.appendChild(option);
+      console.log(categorySelected.options);
+      });
+      
+   } catch(error){
+      console.error("post failed, cannot find categories");
+   }
+}
+postCategory();

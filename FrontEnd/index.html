@@ -70,34 +70,27 @@
                <div id="input-modal">
                   <h3 id="modal-title">Ajout photo</h3>
 				      <form action="#" method="post" id="modal-form" enctype="multipart/form-data">                                                               
-                     <div class="input-file-box">                                 
-                        <i class="fa-regular fa-image fa-5x file-img">
-                           <img id="preview-file" src="#" alt="input_the_file">
-                        </i>                        
+                     <div class="input-file-box">                      
+                        <i class="fa-regular fa-image fa-5x file-img"></i>  
+                        <img id="preview-file" src="#" alt="preview_file">                      
                         <button type="button" class="add-file">
                            <label for="image" id="label-img"> 
                               <h4>+Ajouter photo</h4>
                            </label>
-                           <input id="input-file" type="file" name="image" accept="image/jpg, image/png" size="4000000" aria-label="submit">
-                                                                                                 
+                           <input name="image" id="input-file" type="file" accept="image/jpg, image/png" size="4000000" aria-label="submit">                                                                                               
                         </button>
                         <p>jpg, png : 4mo max</p>
                      </div>              
                      <label for="title" id="label-title">Titre</label>
-                     <input type="text" name="titre" id="input-file-title">
-                     <label for="select-category" id="label-category">Catégorie</label>
-                     <select name="select-category" id="select-category">
-                        <option value="0"></option>
-                        <option value="1">Objet</option>
-                        <option value="2">Appartement</option>
-                        <option value="3">Bar & Restaurant</option>
+                     <input type="text" name="title" id="input-file-title">
+                     <label for="category" id="label-category">Catégorie</label>
+                     <select name="category" id="selected-category">
+                        <option></option>
                      </select>
                   </form>
                   <hr />
-                  <button type="button" id="submit-project" class="submit-project">Valider</button> 			      
-               </div>
-			         
-                                    
+                  <button type="submit" id="submit-project" value="Envoyer">Valider</button> 			      
+               </div>                                   
             </div>			
          </aside>
       </div>

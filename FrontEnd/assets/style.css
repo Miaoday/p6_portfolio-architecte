@@ -281,22 +281,22 @@ h3 {
 	margin: 0 90px;
 	display: none;
 }
-#modal-form {
+/* #modal-form {
 	text-align: left;
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
-}
+} */
 .input-file-box {
 	max-width: 420px;
-	max-height: 169px;
+	height: 156px;
 	border-radius: 3px;
 	background: #E8F1F6;	
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	padding: 20px;
-	gap: 10px;
+	gap: 18px;
 }
 .input-file-box p {
    color: #444;
@@ -313,8 +313,12 @@ h3 {
 #preview-file {
    max-width: 129px;
    max-height: 193px;
-   display: block;
-   /* display: none; */
+   height: 100%;
+   width: 100%;
+   position: absolute;
+   transform: translateY(-18px);
+   z-index: 10;
+   visibility: hidden;
 }
 .add-file {
 	border-radius: 50px;
@@ -330,7 +334,10 @@ h3 {
  input[type= "file" i]{
    opacity: 0;
    cursor: pointer;
-   transform: translateY(-10px);
+   transform: translate(0px,-25px);
+   width: 80%;
+   position: relative;
+   z-index: 10;
 }
 h4{
 	color: #306685;
@@ -341,7 +348,7 @@ h4{
 	font-weight: 500;
    transform: translateY(6px);
 }
-#select-category {
+#selected-category {
    background-color: white;
 }
 hr {
@@ -450,7 +457,7 @@ hr {
 .login-form input,
 .updat-photo input,
 #modal-form input,
-#select-category {
+#selected-category {
 	height: 50px;
 	font-size: 1.2em;
 	border: none;

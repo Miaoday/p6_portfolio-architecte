@@ -255,13 +255,13 @@ addProjectBtn.addEventListener("click",() => {
 });
 // }
 // Return to Modal Gallery
-// function returnPage(){
+function returnPage(){
 returnBtn.addEventListener("click",() => {
    modalGallery.style.display = "block";
    inputModal.style.display = "none";    
    returnBtn.style.visibility = "hidden";
 });
-// }
+}
 // Close Modal Button
 function closeReturnBtn(){
    closeBtn.addEventListener("click",() => {
@@ -272,46 +272,63 @@ function closeReturnBtn(){
       modalWindow.classList.toggle("active");    
    });
 }
-// addFilePage();
-// returnPage();  
-
+ 
 // Add the New Project in Modal Gallery
 const modalForm = document.getElementById('modal-form');
+const previewFile = document.getElementById('preview-file');
+const uploadFile = document.getElementById('input-file');
+const inputTitle = document.getElementById('input-file-title');
+const categorySelected = document.getElementById('selected-category');
+const addFileBtn = document.querySelector('.add-file')
 
 function addNewProject(){
    modalForm.addEventListener("submit",async (event) => {
       console.log(modalForm);
+
       event.preventDefault();
-      const postData = new FormData(modalForm);
+      const prePost = new FormData(modalForm);
+      const postData = new URLSearchParams(prePost);
+      console.log(prePost);   
+      console.log([...postData]);
+
+      postData.append('image', uploadFile.files[0]);
+      postData.append('title', inputTitle.values);
+      postData.append('category', categorySelected);
+
       try {
       const response = await fetch("http://localhost:5678/api/works",{
-         method: "POST",
+         method: "POST", 
          body: postData,
          headers:{
             Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data"
-         }
-      });
+         }   
+      })
+
       if (response.ok){
-         console.log("New Projec submite successfully:", postData);
+         
+         alert("New Projec submite successfully:", postData);
          fetchData();  
          displayModal();
          modalForm.reset();
-
+         returnPage(); 
       }else {
          alert("New Projec submite failed:", postData);
       }
       }catch (error) {
          console.error("Erreur :", error);
-      }
+      }    
    });
+   postCategory();
 }
 addNewProject();
+// displayModal().then(works => {
+//    console.log(works);  
+//    }).catch(error => {
+//    console.error(error);
+//    });
 
-const previewFile = document.getElementById('preview-file');
-const uploadFile = document.getElementById('input-file');
-const addFileBtn = document.querySelector('.add-file')
-
+// function uploadImg () {
 //1. Clicked to choose the project file to upload (input)
 uploadFile.addEventListener("change", treatFiles, false);
 console.log(uploadFile);
@@ -328,34 +345,42 @@ function readUrl(input) {
    if (input.files && input.files[0]) {
       const reader = new FileReader();
       reader.onload = function(e) {
-         console.log(e);
+      console.log(e);
          //4. Link the file with <img>
-         previewFile.src = e.target.result;
-         previewFile.style.visibility = ("visible");
-         addFileBtn.style.visibility = ("hidden");
+      previewFile.src = e.target.result;
+      previewFile.style.visibility = ("visible");
+      addFileBtn.style.visibility = ("hidden");
       }
       //3. Preview the file 
       reader.readAsDataURL(input.files[0]);  
       console.log(reader);      
    }
 }
-
-//Post the categorys
+// }
+//Choose and post the categorys
 async function postCategory () {
    try{  
       const {categories} = await fetchData();
-      const categorySelected = document.getElementById('selected-category');
-
+      
+      console.log(categories);
       categories.forEach((category) => {
       const option = document.createElement('option');    
       option.values = category.id;
       option.textContent = category.name;
       categorySelected.appendChild(option);
-      console.log(categorySelected.options);
+      console.log(option);
       });
       
    } catch(error){
       console.error("post failed, cannot find categories");
    }
 }
-postCategory();
+
+// // Setting submit post button 
+// function submitPost () {
+//    submitProjectBtn.addEventListener('input', () => {
+//       // if(){
+//       // }else(){
+//       // };
+// });
+// }

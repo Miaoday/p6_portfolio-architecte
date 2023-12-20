@@ -354,6 +354,7 @@ h4{
 hr {
 	color: #B3B3B3;
 	margin-top: 40px;
+	width: 100%;
 }
 #submit-project {
    max-width: 237px;
@@ -370,6 +371,12 @@ hr {
 	color: white;
    margin : 2em auto;
    background-color: #A7A7A7;
+}
+#submit-project:hover{
+	background-color: #1D6154;
+}
+#submit-project:active{
+	background-color: #1D6154;
 }
 #add-project {
 	font-size: 14px;

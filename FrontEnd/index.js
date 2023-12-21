@@ -47,11 +47,11 @@ async function fetchData() {
      console.error('Error fetching data:', error);
    }
 }
-displayModal().then(works => {
-console.log(works);  
-}).catch(error => {
-console.error(error);
-});
+// displayModal().then(works => {
+// console.log(works);  
+// }).catch(error => {
+// console.error(error);
+// });
 
 // HomePageSetting
 // Classify the works with the categories buttons
@@ -216,6 +216,7 @@ async function displayModal () {
 }
 return [];  
 }
+
 // Delete the project with trashbin button
 async function deleteWork(event) {
    let id = event.target.id;
@@ -245,10 +246,10 @@ async function deleteWork(event) {
       console.error('Error),', error);
    }
 }
+
 // Active another Modal window
 // function addFilePage(){
 addProjectBtn.addEventListener("click",() => {
-   console.log("Add project button clicked")
    modalGallery.style.display = "none";
    inputModal.style.display = "block";  
    returnBtn.style.visibility = "visible";
@@ -286,32 +287,42 @@ function addNewProject(){
       console.log(modalForm);
 
       event.preventDefault();
-      const prePost = new FormData(modalForm);
-      const postData = new URLSearchParams(prePost);
-      console.log(prePost);   
-      console.log([...postData]);
-
-      postData.append('image', uploadFile.files[0]);
-      postData.append('title', inputTitle.values);
-      postData.append('category', categorySelected);
+      const data = new FormData(modalForm);
+      // const postData = new URLSearchParams(prePost);
+      // console.log(prePost);      
+      // console.log([...postData]);
+      // const data = {
+      //    image: uploadFile.files[0].toDataURL(),
+      //    title: inputTitle.values.title,
+      //    category: categorySelected.category.id,
+      // }
+      console.log('post', uploadFile.files[0]);
+      // {
+      //    image: imageEncodedEnBase64,
+      //   Category: LaCategorie,
+      //   Title: LeTitre 
+      //   }
+      // image.toDataURL()
+      data.append('image', uploadFile.files[0]);
+      data.append('title', inputTitle.values);
+      data.append('category', categorySelected.categoryId);
+      console.log('post',data);
 
       try {
       const response = await fetch("http://localhost:5678/api/works",{
          method: "POST", 
-         body: postData,
+         body: data,
          headers:{
             Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data"
          }   
       })
 
-      if (response.ok){
-         
-         alert("New Projec submite successfully:", postData);
-         fetchData();  
-         displayModal();
+      if (response.ok){         
+         treatFiles();
          modalForm.reset();
          returnPage(); 
+         alert("New Projec submite successfully:", postData);
       }else {
          alert("New Projec submite failed:", postData);
       }
@@ -321,7 +332,7 @@ function addNewProject(){
    });
    postCategory();
 }
-addNewProject();
+
 // displayModal().then(works => {
 //    console.log(works);  
 //    }).catch(error => {
@@ -377,10 +388,16 @@ async function postCategory () {
 }
 
 // // Setting submit post button 
-// function submitPost () {
-//    submitProjectBtn.addEventListener('input', () => {
-//       // if(){
-//       // }else(){
-//       // };
-// });
-// }
+function submitPost () {
+   submitProjectBtn.addEventListener('input', () => {
+      // if( ){
+      // }else(){
+      // };
+});
+}
+addNewProject();
+displayModal().then(works => {
+console.log(works);  
+}).catch(error => {
+console.error(error);
+});

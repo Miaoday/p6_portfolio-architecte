@@ -287,16 +287,16 @@ function addNewProject(){
       console.log(modalForm);
 
       event.preventDefault();
-      const data = new FormData(modalForm);
+      const data = new FormData();
       // const postData = new URLSearchParams(prePost);
       // console.log(prePost);      
       // console.log([...postData]);
       // const data = {
       //    image: uploadFile.files[0].toDataURL(),
-      //    title: inputTitle.values.title,
+      //    title: inputTitle,
       //    category: categorySelected.category.id,
       // }
-      console.log('post', uploadFile.files[0]);
+      // console.log('post', uploadFile.files[0]);
       // {
       //    image: imageEncodedEnBase64,
       //   Category: LaCategorie,
@@ -304,9 +304,11 @@ function addNewProject(){
       //   }
       // image.toDataURL()
       data.append('image', uploadFile.files[0]);
-      data.append('title', inputTitle.values);
-      data.append('category', categorySelected.categoryId);
-      console.log('post',data);
+      data.append('title', inputTitle.value);
+      data.append('category', categorySelected.value);
+      console.log('image', uploadFile.files[0]);
+      console.log('title', inputTitle.value);
+      console.log('category', categorySelected.value);
 
       try {
       const response = await fetch("http://localhost:5678/api/works",{
@@ -319,12 +321,12 @@ function addNewProject(){
       })
 
       if (response.ok){         
-         treatFiles();
-         modalForm.reset();
-         returnPage(); 
-         alert("New Projec submite successfully:", postData);
+         // treatFiles();
+         // modalForm.reset();
+         // returnPage(); 
+         alert("New Projec submite successfully");
       }else {
-         alert("New Projec submite failed:", postData);
+         alert("New Projec submite failed");
       }
       }catch (error) {
          console.error("Erreur :", error);
@@ -376,7 +378,7 @@ async function postCategory () {
       console.log(categories);
       categories.forEach((category) => {
       const option = document.createElement('option');    
-      option.values = category.id;
+      option.value = category.id;
       option.textContent = category.name;
       categorySelected.appendChild(option);
       console.log(option);

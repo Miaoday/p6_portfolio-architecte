@@ -266,7 +266,6 @@ returnBtn.addEventListener("click",() => {
 // Close Modal Button
 function closeReturnBtn(){
    closeBtn.addEventListener("click",() => {
-      console.log("close button clicked");
       modalGallery.style.display = "block";
       inputModal.style.display = "none";
       returnBtn.style.visibility = "hidden";    
@@ -315,15 +314,15 @@ function addNewProject(){
          method: "POST", 
          body: data,
          headers:{
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data"
+            Authorization: `Bearer ${token}`,  
+            // "Content-Type": "multipart/form-data"
          }   
       })
 
       if (response.ok){         
-         // treatFiles();
-         // modalForm.reset();
-         // returnPage(); 
+         
+         modalForm.reset();
+         returnPage(); 
          alert("New Projec submite successfully");
       }else {
          alert("New Projec submite failed");

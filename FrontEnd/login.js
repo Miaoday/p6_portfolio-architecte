@@ -1,9 +1,7 @@
 // LogingPage
 const errorMessage = document.getElementById('error-message');
-console.log(errorMessage);
 const email = document.getElementById('emailInput');
 const password = document.getElementById('passwordInput');
-console.log(email, password);
 const submit = document.getElementById('submitConnected');
 
 // Request the User DataSource 
@@ -16,17 +14,13 @@ async function loginRequest(userData) {
       });
 
       if(response.status===200) {
-         const userData = await response.json();
-         localStorage.setItem('token',userData.token);
          // then store the response in the data
-         // document.getElementById('success').innerHTML=
-         // 'Request Succeded';
+         const userData = await response.json();
+         localStorage.setItem('token',userData.token);   
          console.log('Request Succeded');
-         // alert('Admin Login Success');
          window.location.replace("./index.html");
          return userData;      
       } 
-
       else if (!response.ok) {  // restore the error
          console.error('Request Failed', response.status);
          email.style.border = "1px solid #FF0000";

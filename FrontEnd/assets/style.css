@@ -543,6 +543,7 @@ footer nav ul li {
 }
 .error {
 	color: red;
+	text-align: center;
 }
 #emailInput, #passwordInput {
 	width: 40%;

@@ -72,8 +72,7 @@ a:hover {
 	background-color:#000;
 	height: 59px;
 	width: 100vw;
-	display: none;
-	
+	display: none;	
 }
 
 .edition-mode {
@@ -137,9 +136,6 @@ nav li {
 nav li img {
 	width: 24px;
 }
-/* li a:hover {
-	color: #B1663C;
-} */
 
 /* Introduction Section */
 
@@ -241,9 +237,7 @@ nav li img {
 	background: none;
    cursor: pointer;
 }
-/* #modal-gallery{
-	display: block;
-} */
+
 h3 {
 	text-align: center;
 	font-family: Work Sans;
@@ -316,13 +310,6 @@ h3 {
 	border-radius: 60px;
 	cursor: pointer;
 }
-
-/* #modal-form {
-	text-align: left;
-	display: flex;
-	flex-direction: column;
-	align-items: stretch;
-} */
 .input-file-box {
 	max-width: 420px;
 	height: 156px;
@@ -392,7 +379,6 @@ hr {
 	margin-top: 40px;
 	width: 100%;
 }
-
 #submit-project {
    max-width: 237px;
 	display: flex;
@@ -415,7 +401,6 @@ hr {
 #submit-project:active{
 	background-color: #1D6154;
 }
-
 
 /* Filtre Button in My Projects Gallery */
 

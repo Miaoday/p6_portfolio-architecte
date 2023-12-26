@@ -33,8 +33,7 @@ async function loginRequest(userData) {
          password.style.border = "1px solid #FF0000";
          errorMessage.innerText = 'E-mail & Password Error';
          errorMessage.classList.add('error');        
-         return false;
-         
+         return false;       
       }
    } 
    catch (error) {
@@ -70,38 +69,5 @@ submit.addEventListener('click', (e)=>{
    //    error.classList.add('error');
    //    password.style.border = "1px solid #FF0000";
    //    return false;
-   // }
-   
+   // } 
 });
-
-// Token status setting for the Admin page
-// const adminNav = document.getElementById('admin-nav');
-// const logInOut= document.getElementById('log-in-out');
-// const titlePortfolio = document.querySelector('.portfolio-title');
-// const modalButton = document.getElementById('modal-btn');
-// const filtreBtn = document.querySelectorAll('.filtreBtn');
-
-// let token = localStorage.getItem('token');
-// console.log('Token value:', token)
-
-// if (token){
-//    adminNav.style.visibility = "visible";
-//    modalButton.style.visibility= "visible";
-//    logInOut.innerHTML="logout";   
-// }
-
-// function logOut(){
-//    if(token===null){
-//       console.log('Token value is null')
-//       window.location.reload('./login.html');
-//    } else {
-//       localStorage.clear();
-//       window.location.replace('./index.html');
-//    }
-// };
-
-// logInOut.addEventListener("click",(e)=>{
-//    logOut();
-
-// })
-

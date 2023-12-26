@@ -77,7 +77,7 @@ async function fetchData() {
    }
 }
 
-// HomePageSetting
+// Home page setting
 // Classify the works with the categories buttons
 function filtreByCategories (categories,works) {    
    const classment = document.getElementById("filtres"); 
@@ -147,46 +147,8 @@ function updateGallery (works) {
    });
 }
 
-// Token status setting for Admin page
-let token = localStorage.getItem('token');
-console.log('Token value:', token)
+// Modal Window// 
 
-if (token){
-   adminNav.style.display = "block";
-   modalButton.style.visibility = "visible";
-   logInOut.innerHTML = "logout";   
-}
-
-function logOut() {
-
-   if(token===null){
-      console.log('Token value is null')
-      window.location.replace('./login.html');
-   } else {
-      // clear the token
-      localStorage.clear(); 
-      window.location.replace('./index.html');
-   }
-};
-
-logInOut.addEventListener("click",(e)=>{
-   logOut();
-})
-
-// Modal window settings
-modalTriggers.forEach(trigger =>
-   trigger.addEventListener("click", toggleModal));
-   
-function toggleModal () {
-   modalWindow.classList.toggle("active");
-   if (modalWindow.classList.contains('active')) {
-      addProjectBtn.addEventListener("click",()=>{
-         returnBtn.style.visibility = "visible";
-      });          
-   }else  {
-      noReturnBtn();
-   }
-}
 
 // Import the project into the Modal Window
 async function displayModal () {
@@ -237,13 +199,10 @@ async function deleteWork(event) {
       }   
       });
   
-   if (response.ok){
-      // figure.remove();
-      // alert('Item deleted successfully');
+   if (response.ok){    
       document.getElementById('message-a').innerHTML=
       "Project deleted successfully!";
-      messageA.style.display = "flex";
-        
+      messageA.style.display = "flex";      
       fetchData();  
       displayModal();
                
@@ -259,46 +218,6 @@ async function deleteWork(event) {
    }
 }
 
-// Active another Modal window
-function addFilePage(){
-addProjectBtn.addEventListener("click",() => {
-   modalGallery.style.display = "none";
-   inputModal.style.display = "block";  
-   returnBtn.style.visibility = "visible";  
-   previewFile.src = "";
-   previewFile.style.visibility = ("hidden");
-   addFileBtn.style.visibility = ("visible");
-   inputTitle.value= "";
-   console.log(inputTitle.value);
-});
-}
-
-// Return to Modal Gallery
-function toGalleryPage() {
-returnBtn.addEventListener("click",() => {
-   console.log("coucou gallery");
-   modalGallery.style.display = "block";
-   inputModal.style.display = "none";    
-   returnBtn.style.visibility = "hidden";   
-});
-}
-
-// Debug return Button
-function noReturnBtn() {
-   closeBtn.addEventListener("click",() => {
-      modalGallery.style.display = "block";
-      inputModal.style.display = "none";
-      returnBtn.style.visibility = "hidden";    
-      // modalWindow.classList.toggle("active");    
-      console.log("byebye returnButton");
-   });
-}
-
-// Close Modal Window
-// function closeModalWindow(){
-//    modalWindow.style.display = "none";
-// }
- 
 // Add the New Project in Modal Gallery
 async function addNewProject() {
    modalForm.addEventListener("submit", async (event) => {
@@ -320,20 +239,24 @@ async function addNewProject() {
             // "Content-Type": "multipart/form-data"
          }   
       })
-      if (response.ok){                     
+      if (response.ok) {                          
          // Reset Modal Form
-         modalForm.reset();    
+         modalForm.reset();           
+         // Submit successed message  
+         document.getElementById('message-b').innerHTML=
+         "New Project submited successfully!";
+         messageB.style.display = "flex";
+         
          // ajout dynamique de la nouvelle image
          const newProject = await response.json();
          updateGallery([newProject]);       
-         // toGalleryPage(); 
-         // console.log(toGalleryPage());        
+       
          // dynamiser la modal apres ajouter le projet sans rafaichir la page 
          displayModal();  
-         // successed message  
-         document.getElementById('message-b').innerHTML=
-         "New Project submited successfully!";
-         messageB.style.display = "flex";       
+
+         // Back to input field of project (modal form)
+         // addFilePage();     
+
       }
       else {
          // alert("New Projec submite failed");
@@ -346,6 +269,8 @@ async function addNewProject() {
       }         
    });
    postCategory();
+   toggleModal();
+   // addFilePage();
 }
 
 //1. Choose the file project to upload (input)
@@ -397,6 +322,63 @@ async function postCategory () {
 }
 
 // // Setting submit post button 
+
+// Active input modal window
+function addFilePage(){
+addProjectBtn.addEventListener("click",() => {
+   modalGallery.style.display = "none";
+   inputModal.style.display = "block";  
+   returnBtn.style.visibility = "visible";  
+   previewFile.src = "";
+   previewFile.style.visibility = ("hidden");
+   addFileBtn.style.visibility = ("visible");
+   inputTitle.value= "";
+   console.log(inputTitle.value);
+});
+}
+
+// Return to Modal Gallery
+function toGalleryPage() {
+returnBtn.addEventListener("click",() => {
+   console.log("coucou gallery");
+   modalGallery.style.display = "block";
+   inputModal.style.display = "none";    
+   returnBtn.style.visibility = "hidden";   
+});
+}
+
+// Debug return Button
+function noReturnBtn() {
+   closeBtn.addEventListener("click",() => {
+      modalGallery.style.display = "block";
+      inputModal.style.display = "none";
+      returnBtn.style.visibility = "hidden";    
+      // modalWindow.classList.toggle("active");    
+      console.log("byebye returnButton");
+   });
+}
+
+// Close Modal Window
+// function closeModalWindow(){
+//    modalWindow.style.display = "none";
+// }
+ 
+
+// Modal window settings
+modalTriggers.forEach(trigger =>
+   trigger.addEventListener("click", toggleModal));
+   
+function toggleModal () {
+   modalWindow.classList.toggle("active");
+   if (modalWindow.classList.contains('active')) {
+      addProjectBtn.addEventListener("click",()=>{
+         returnBtn.style.visibility = "visible";
+      });          
+   }else  {
+      noReturnBtn();
+   }
+}
+
 // function submitPost () {
 //    submitProjectBtn.addEventListener('input', () => {
 //       // if( ){
@@ -404,6 +386,34 @@ async function postCategory () {
 //       // };
 // });
 // }
+
+// Token
+// Token status setting for login 
+let token = localStorage.getItem('token');
+console.log('Token value:', token)
+
+if (token){
+   adminNav.style.display = "block";
+   modalButton.style.visibility = "visible";
+   logInOut.innerHTML = "logout";   
+}
+
+function logOut() {
+
+   if(token===null){
+      console.log('Token value is null')
+      window.location.replace('./login.html');
+   } else {
+      // clear the token
+      localStorage.clear(); 
+      window.location.replace('./index.html');
+   }
+};
+
+logInOut.addEventListener("click",(e)=>{
+   logOut();
+})
+
 addFilePage();
 toGalleryPage();
 addNewProject();

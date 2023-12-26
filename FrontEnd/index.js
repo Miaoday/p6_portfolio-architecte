@@ -1,3 +1,31 @@
+// Catch DOM tree
+const gallery = document.querySelector(".gallery");
+const galleryId = document.getElementById("galleryid");
+
+const adminNav = document.getElementById('admin-nav');
+const logInOut= document.getElementById('log-in-out');
+const titlePortfolio = document.querySelector('.portfolio-title');
+const modalButton = document.getElementById('modal-btn');
+const filtreBtn = document.querySelectorAll('.filtreBtn');
+
+const modalWindow = document.querySelector('.modal-window');
+const modalWrapper = document.querySelector('.modal-wrapper');
+const modalTriggers = document.querySelectorAll('.modal-trigger');
+const modalGallery = document.getElementById('modal-gallery');
+const editModal = document.getElementById('edit-modal');
+const closeBtn = document.querySelector('.close-modal');
+const addProjectBtn = document.getElementById('add-project');
+const inputModal = document.getElementById('input-modal');
+const returnBtn = document.querySelector('.fa-arrow-left');
+const messageA = document.getElementById('message-a');
+const submitProjectBtn = document.getElementById('submit-project');
+const modalForm = document.getElementById('modal-form');
+const previewFile = document.getElementById('preview-file');
+const uploadFile = document.getElementById('input-file');
+const inputTitle = document.getElementById('input-file-title');
+const categorySelected = document.getElementById('selected-category');
+const messageB = document.getElementById('message-b');
+const addFileBtn = document.querySelector('.add-file')
 
 // Get the Categories from API
 async function getApiCategories() {  
@@ -6,7 +34,7 @@ async function getApiCategories() {
       if (!getApiCategories.ok) {
         throw Error('Network response was not ok');
       }
-      if (getApiCategories.ok) {
+      else if (getApiCategories.ok) {
          console.log('données récupérées avec succès')
       };
       const dataCatagories = await getApiCategories.json();
@@ -23,14 +51,14 @@ async function getApiWorks() {
       if (!getApiWorks.ok) {
          throw Error('Works request failed');
       }
-      if (getApiWorks.ok) {
+      else if (getApiWorks.ok) {
          console.log('données récupérées avec succès')
       };
       const dataWorks = await getApiWorks.json();
       console.log('Works from API:', dataWorks)
       return dataWorks;
    } catch (error){
-      console.log('Fetch works error:', error)
+      console.error('Fetch works error:', error)
    }
 }
 // For treating the callback data
@@ -41,18 +69,13 @@ async function fetchData() {
 
      // collecting all API Datas therfore retrieving by other function
      updateGallery(works); // calling updateGallery function
-     filtreByCategories(categories,works); // calling filreByCategories function 
-   //   displayModal(works);
+     filtreByCategories(categories,works); // calling filreByCategories function  
      return { categories, works };
-   } catch (error) {
+   } 
+   catch (error) {
      console.error('Error fetching data:', error);
    }
 }
-// displayModal().then(works => {
-// console.log(works);  
-// }).catch(error => {
-// console.error(error);
-// });
 
 // HomePageSetting
 // Classify the works with the categories buttons
@@ -103,10 +126,7 @@ function filtreByCategories (categories,works) {
    });
 }
 
-// Update dynamic portfolio works in gallery
-const gallery = document.querySelector(".gallery");
-const galleryId = document.getElementById("galleryid");
-
+// Update dynamic portfolio works of gallery
 function updateGallery (works) {
    gallery.innerHTML = '';  // clear actual gallery elements
    works.forEach(work=> {
@@ -128,12 +148,6 @@ function updateGallery (works) {
 }
 
 // Token status setting for Admin page
-const adminNav = document.getElementById('admin-nav');
-const logInOut= document.getElementById('log-in-out');
-const titlePortfolio = document.querySelector('.portfolio-title');
-const modalButton = document.getElementById('modal-btn');
-const filtreBtn = document.querySelectorAll('.filtreBtn');
-
 let token = localStorage.getItem('token');
 console.log('Token value:', token)
 
@@ -160,29 +174,17 @@ logInOut.addEventListener("click",(e)=>{
 })
 
 // Modal window settings
-const modalWindow = document.querySelector('.modal-window');
-const modalWrapper = document.querySelector('.modal-wrapper');
-const modalTriggers = document.querySelectorAll('.modal-trigger');
-const modalGallery = document.getElementById('modal-gallery');
-const editModal = document.getElementById('edit-modal');
-const closeBtn = document.querySelector('.close-modal');
-const addProjectBtn = document.getElementById('add-project');
-const inputModal = document.getElementById('input-modal');
-const returnBtn = document.querySelector('.fa-arrow-left');
-const messageA = document.getElementById('message-a');
-const submitProjectBtn = document.getElementById('submit-project');
-
 modalTriggers.forEach(trigger =>
    trigger.addEventListener("click", toggleModal));
    
 function toggleModal () {
    modalWindow.classList.toggle("active");
-   if(modalWindow.classList.contains('active')) {
+   if (modalWindow.classList.contains('active')) {
       addProjectBtn.addEventListener("click",()=>{
          returnBtn.style.visibility = "visible";
       });          
    }else  {
-      closeReturnBtn();
+      noReturnBtn();
    }
 }
 
@@ -263,8 +265,14 @@ addProjectBtn.addEventListener("click",() => {
    modalGallery.style.display = "none";
    inputModal.style.display = "block";  
    returnBtn.style.visibility = "visible";  
+   previewFile.src = "";
+   previewFile.style.visibility = ("hidden");
+   addFileBtn.style.visibility = ("visible");
+   inputTitle.value= "";
+   console.log(inputTitle.value);
 });
 }
+
 // Return to Modal Gallery
 function toGalleryPage() {
 returnBtn.addEventListener("click",() => {
@@ -274,33 +282,24 @@ returnBtn.addEventListener("click",() => {
    returnBtn.style.visibility = "hidden";   
 });
 }
-toGalleryPage();
 
 // Debug return Button
-function closeReturnBtn() {
+function noReturnBtn() {
    closeBtn.addEventListener("click",() => {
       modalGallery.style.display = "block";
       inputModal.style.display = "none";
       returnBtn.style.visibility = "hidden";    
       // modalWindow.classList.toggle("active");    
-      console.log("byebye");
+      console.log("byebye returnButton");
    });
 }
 
 // Close Modal Window
-function closeModalWindow(){
-   modalWindow.style.display = "none";
-}
+// function closeModalWindow(){
+//    modalWindow.style.display = "none";
+// }
  
 // Add the New Project in Modal Gallery
-const modalForm = document.getElementById('modal-form');
-const previewFile = document.getElementById('preview-file');
-const uploadFile = document.getElementById('input-file');
-const inputTitle = document.getElementById('input-file-title');
-const categorySelected = document.getElementById('selected-category');
-const messageB = document.getElementById('message-b');
-const addFileBtn = document.querySelector('.add-file')
-
 async function addNewProject() {
    modalForm.addEventListener("submit", async (event) => {
       console.log(modalForm);
@@ -309,10 +308,9 @@ async function addNewProject() {
       data.append('image', uploadFile.files[0]);
       data.append('title', inputTitle.value);
       data.append('category', categorySelected.value);
-      console.log('image', uploadFile.files[0]);
-      console.log('title', inputTitle.value);
-      console.log('category', categorySelected.value);
-
+      // console.log('image', uploadFile.files[0]);
+      // console.log('title', inputTitle.value);
+      // console.log('category', categorySelected.value);
       try {
       const response = await fetch("http://localhost:5678/api/works",{
          method: "POST", 
@@ -322,47 +320,35 @@ async function addNewProject() {
             // "Content-Type": "multipart/form-data"
          }   
       })
-
       if (response.ok){                     
          // Reset Modal Form
          modalForm.reset();    
          // ajout dynamique de la nouvelle image
          const newProject = await response.json();
          updateGallery([newProject]);       
-         toGalleryPage();         
+         // toGalleryPage(); 
+         // console.log(toGalleryPage());        
          // dynamiser la modal apres ajouter le projet sans rafaichir la page 
          displayModal();  
-         // alert("New Projec submite successfully");      
+         // successed message  
          document.getElementById('message-b').innerHTML=
          "New Project submited successfully!";
+         messageB.style.display = "flex";       
+      }
+      else {
+         // alert("New Projec submite failed");
+         document.getElementById('message-b').innerHTML=
+         "New Projec submite failed!";
          messageB.style.display = "flex";
-         
-         previewFile.src = "";
-         previewFile.style.visibility = ("hidden");
-         addFileBtn.style.visibility = ("visible");
-         
-         // closeBtn.addEventListener("click", closeReturnBtn)
-         // console.log (closeReturnBtn); 
-        
-      }else {
-         alert("New Projec submite failed");
       }
       }catch (error) {
          console.error("Erreur :", error);
-      }    
-      
+      }         
    });
    postCategory();
 }
 
-// displayModal().then(works => {
-//    console.log(works);  
-//    }).catch(error => {
-//    console.error(error);
-//    });
-
-// function uploadImg () {
-//1. Clicked to choose the project file to upload (input)
+//1. Choose the file project to upload (input)
 uploadFile.addEventListener("change", treatFiles, false);
 console.log(uploadFile);
 
@@ -386,10 +372,11 @@ function readUrl(input) {
       }
       //3. Preview the file 
       newImg.readAsDataURL(input.files[0]);  
-      console.log(newImg);      
+      console.log(newImg);   
+      document.getElementById('input-file-title').focus();   
    }
 }
-// }
+
 //Choose and post the categorys
 async function postCategory () {
    try{  
@@ -402,9 +389,9 @@ async function postCategory () {
       option.textContent = category.name;
       categorySelected.appendChild(option);
       console.log(option);
-      });
-      
-   } catch(error){
+      });    
+   } 
+   catch(error){
       console.error("post failed, cannot find categories");
    }
 }
@@ -418,18 +405,13 @@ async function postCategory () {
 // });
 // }
 addFilePage();
+toGalleryPage();
 addNewProject();
 displayModal().then(works => {
 console.log(works);  
 }).catch(error => {
 console.error(error);
 });
-
-
-
-
-
-
 
 
 // const data = {

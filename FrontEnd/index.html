@@ -65,6 +65,7 @@
                   <h3 id="modal-title">Galerie photo</h3>
                   <div id="edit-modal"></div>
                   <hr />
+                  <span id="message-a"></span>
                   <button type="button" id="add-project" class="add-project">Ajouter une photo</button>
                </div>
                <div id="input-modal">
@@ -77,18 +78,20 @@
                            <label for="image" id="label-img"> 
                               <h4>+Ajouter photo</h4>
                            </label>
-                           <input name="image" id="input-file" type="file" accept="image/jpg, image/png" size="4000000" aria-label="submit">                                                                                               
+                           <input name="image" id="input-file" type="file" accept="image/jpg, image/png" size="4000000" aria-label="submit" required>                                                                                               
                         </button>
                         <p>jpg, png : 4mo max</p>
                      </div>              
                      <label for="title" id="label-title">Titre</label>
-                     <input type="text" name="title" id="input-file-title">
+                     <input type="text" name="title" id="input-file-title" required>
                      <label for="category" id="label-category">Catégorie</label>
-                     <select name="category" id="selected-category">
+                     <select name="category" id="selected-category" required>
                         <option></option>
                      </select>
                      <hr />
+                     <span id="message-b"></span>
                      <button type="submit" id="submit-project" value="Valider">Valider</button> 
+                     
                   </form>
                </div>                                   
             </div>			

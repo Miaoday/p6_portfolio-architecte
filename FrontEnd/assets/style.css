@@ -134,7 +134,9 @@ nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
 }
-
+nav li img {
+	width: 24px;
+}
 /* li a:hover {
 	color: #B1663C;
 } */
@@ -232,7 +234,6 @@ nav li {
    cursor: pointer;
    visibility: hidden;
 }
-
 .close-modal {
    width: 24px;
    height: 24px;
@@ -258,9 +259,18 @@ h3 {
 	gap: 2em 0.8em;
 	margin: 3.3em;
 }
+#edit-modal > figure{
+	position: relative;
+}
 #edit-modal > figure img {
 	height: fit-content;
 	width: 100%;
+}
+#edit-modal> figure span {
+	position: absolute;
+	display: inline-block;
+	top: 60px;
+	right: 28px;
 }
 #edit-modal> figure i {	
 	font-size: 12px;
@@ -271,8 +281,8 @@ h3 {
 	height: 17px;
 	width: 17px;
 	text-align: center;
-	position: absolute;
-	transform: translate(-25px, 8px);
+	position: sticky;
+    transform: translate(24px, -55px);
 }
 .fa-trash-can{
 	cursor: pointer;
@@ -281,6 +291,32 @@ h3 {
 	margin: 0 90px;
 	display: none;
 }
+#message-a, #message-b {	
+	display: none;
+	display: flex;
+    justify-content: center;
+    align-items: center;
+	color: #306685;
+    padding: 8px;
+}
+#add-project {
+	font-size: 14px;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	padding: 10px 40px;
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
+	margin : 2em auto;
+	max-width: 237px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border-radius: 60px;
+	cursor: pointer;
+}
+
 /* #modal-form {
 	text-align: left;
 	display: flex;
@@ -356,6 +392,7 @@ hr {
 	margin-top: 40px;
 	width: 100%;
 }
+
 #submit-project {
    max-width: 237px;
 	display: flex;
@@ -378,23 +415,7 @@ hr {
 #submit-project:active{
 	background-color: #1D6154;
 }
-#add-project {
-	font-size: 14px;
-	border: none;
-	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
-	padding: 10px 40px;
-	font-family: 'Syne';
-	font-weight: 700;
-	color: white;
-	background-color: #1D6154;
-	margin : 2em auto;
-	max-width: 237px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	border-radius: 60px;
-	cursor: pointer;
-}
+
 
 /* Filtre Button in My Projects Gallery */
 
@@ -407,7 +428,7 @@ hr {
 .filtreBtn {
 	background-color: white;
 	color: #1D6154;
-	border-color: #1D6154;
+	border: 1px solid #1D6154;
 	border-radius: 60px;
 	font-family: Syne;
 	font-style: normal;
@@ -423,7 +444,7 @@ hr {
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
-.filtreBtn:hover { 
+.filtreBtn:active { 
 	color:white;
 	background-color: #1D6154;
 }
@@ -519,6 +540,9 @@ footer nav ul li {
 }
 .login-form a {
 	text-decoration: underline;
+}
+.error {
+	color: red;
 }
 #emailInput, #passwordInput {
 	width: 40%;

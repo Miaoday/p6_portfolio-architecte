@@ -1,3 +1,4 @@
+
 // Get the Categories from API
 async function getApiCategories() {  
    try {
@@ -57,21 +58,22 @@ async function fetchData() {
 // Classify the works with the categories buttons
 function filtreByCategories (categories,works) {    
    const classment = document.getElementById("filtres"); 
+   classment.innerHTML= "";
    // create the Button 'Tous'
-   const buttonTous = document.createElement('button');
-   buttonTous.classList.add('filtreBtn');
-   buttonTous.innerText = 'Tous';
-   buttonTous.setAttribute('id', 'all');
+   const allButton = document.createElement('button');
+   allButton.classList.add('filtreBtn');
+   allButton.innerText = 'Tous';
+   allButton.setAttribute('id', 'all');
    // attatched the elements
-   classment.appendChild(buttonTous);
+   classment.appendChild(allButton);
 
    // use the New object Set to retreive works categorys ID
-   const newsetWorksId = new Set(works.map(function (work){ 
-      return work.categoryId; 
-   })); 
+   const sortCategoriesIds = [...new Set(works.map(work => work.categoryId))].sort((a, b) => {
+      return a - b;
+   }); 
 
    // Create catogorys buttons 
-   newsetWorksId.forEach(categoryId => {
+   sortCategoriesIds.forEach(categoryId => {
       const btn = document.createElement('button');
       const category = categories.find(cat => cat.id === categoryId);
       btn.classList.add('filtreBtn');
@@ -90,7 +92,7 @@ function filtreByCategories (categories,works) {
       });
    });
    // click the button 'Tous'
-   buttonTous.addEventListener('click', function() {
+   allButton.addEventListener('click', function() {
       updateGallery(works);
    }); 
 
@@ -147,7 +149,8 @@ function logOut() {
       console.log('Token value is null')
       window.location.replace('./login.html');
    } else {
-      localStorage.clear();
+      // clear the token
+      localStorage.clear(); 
       window.location.replace('./index.html');
    }
 };
@@ -165,7 +168,8 @@ const editModal = document.getElementById('edit-modal');
 const closeBtn = document.querySelector('.close-modal');
 const addProjectBtn = document.getElementById('add-project');
 const inputModal = document.getElementById('input-modal');
-const returnBtn = document.querySelector('.return');
+const returnBtn = document.querySelector('.fa-arrow-left');
+const messageA = document.getElementById('message-a');
 const submitProjectBtn = document.getElementById('submit-project');
 
 modalTriggers.forEach(trigger =>
@@ -187,10 +191,11 @@ async function displayModal () {
    try{
       const {works} = await fetchData();  // make sure works had initiated
       console.log(works);        
-      // editModal.innerHTML = '';  // clear actual gallery elements
+      editModal.innerHTML = '';  // clear actual gallery elements
       works.forEach (work=> {  
          const figure = document.createElement("figure");
          const figureImg = document.createElement("img");
+         const span = document.createElement("span");
          const trashBtn = document.createElement("i");
          figure.id = work.id;
          figureImg.src = work.imageUrl;
@@ -200,8 +205,9 @@ async function displayModal () {
          trashBtn.className += "fa-regular fa-trash-can";   
          trashBtn.setAttribute('id', work.id);
          // attatched figure into the gallery
+         span.appendChild(trashBtn);
          figure.appendChild(figureImg);
-         figure.appendChild(trashBtn);
+         figure.appendChild(span);
          editModal.appendChild(figure);
          // get the trash can
          document.querySelectorAll('.fa-trash-can').forEach((trashBtn)=> {                
@@ -219,6 +225,7 @@ return [];
 
 // Delete the project with trashbin button
 async function deleteWork(event) {
+   gallery.innerHTML = ''; 
    let id = event.target.id;
    try{
       const response = await fetch (`http://localhost:5678/api/works/${id}`, {
@@ -230,7 +237,11 @@ async function deleteWork(event) {
   
    if (response.ok){
       // figure.remove();
-      alert('Item deleted successfully');  
+      // alert('Item deleted successfully');
+      document.getElementById('message-a').innerHTML=
+      "Project deleted successfully!";
+      messageA.style.display = "flex";
+        
       fetchData();  
       displayModal();
                
@@ -241,36 +252,44 @@ async function deleteWork(event) {
    } else {
       console.error('Delete failed :', response.status);
    }
-
    } catch (error) {
       console.error('Error),', error);
    }
 }
 
 // Active another Modal window
-// function addFilePage(){
+function addFilePage(){
 addProjectBtn.addEventListener("click",() => {
    modalGallery.style.display = "none";
    inputModal.style.display = "block";  
-   returnBtn.style.visibility = "visible";
-});
-// }
-// Return to Modal Gallery
-function returnPage(){
-returnBtn.addEventListener("click",() => {
-   modalGallery.style.display = "block";
-   inputModal.style.display = "none";    
-   returnBtn.style.visibility = "hidden";
+   returnBtn.style.visibility = "visible";  
 });
 }
-// Close Modal Button
-function closeReturnBtn(){
+// Return to Modal Gallery
+function toGalleryPage() {
+returnBtn.addEventListener("click",() => {
+   console.log("coucou gallery");
+   modalGallery.style.display = "block";
+   inputModal.style.display = "none";    
+   returnBtn.style.visibility = "hidden";   
+});
+}
+toGalleryPage();
+
+// Debug return Button
+function closeReturnBtn() {
    closeBtn.addEventListener("click",() => {
       modalGallery.style.display = "block";
       inputModal.style.display = "none";
       returnBtn.style.visibility = "hidden";    
-      modalWindow.classList.toggle("active");    
+      // modalWindow.classList.toggle("active");    
+      console.log("byebye");
    });
+}
+
+// Close Modal Window
+function closeModalWindow(){
+   modalWindow.style.display = "none";
 }
  
 // Add the New Project in Modal Gallery
@@ -279,29 +298,14 @@ const previewFile = document.getElementById('preview-file');
 const uploadFile = document.getElementById('input-file');
 const inputTitle = document.getElementById('input-file-title');
 const categorySelected = document.getElementById('selected-category');
+const messageB = document.getElementById('message-b');
 const addFileBtn = document.querySelector('.add-file')
 
-function addNewProject(){
-   modalForm.addEventListener("submit",async (event) => {
+async function addNewProject() {
+   modalForm.addEventListener("submit", async (event) => {
       console.log(modalForm);
-
       event.preventDefault();
-      const data = new FormData();
-      // const postData = new URLSearchParams(prePost);
-      // console.log(prePost);      
-      // console.log([...postData]);
-      // const data = {
-      //    image: uploadFile.files[0].toDataURL(),
-      //    title: inputTitle,
-      //    category: categorySelected.category.id,
-      // }
-      // console.log('post', uploadFile.files[0]);
-      // {
-      //    image: imageEncodedEnBase64,
-      //   Category: LaCategorie,
-      //   Title: LeTitre 
-      //   }
-      // image.toDataURL()
+      const data = new FormData();      
       data.append('image', uploadFile.files[0]);
       data.append('title', inputTitle.value);
       data.append('category', categorySelected.value);
@@ -319,17 +323,34 @@ function addNewProject(){
          }   
       })
 
-      if (response.ok){         
+      if (response.ok){                     
+         // Reset Modal Form
+         modalForm.reset();    
+         // ajout dynamique de la nouvelle image
+         const newProject = await response.json();
+         updateGallery([newProject]);       
+         toGalleryPage();         
+         // dynamiser la modal apres ajouter le projet sans rafaichir la page 
+         displayModal();  
+         // alert("New Projec submite successfully");      
+         document.getElementById('message-b').innerHTML=
+         "New Project submited successfully!";
+         messageB.style.display = "flex";
          
-         modalForm.reset();
-         returnPage(); 
-         alert("New Projec submite successfully");
+         previewFile.src = "";
+         previewFile.style.visibility = ("hidden");
+         addFileBtn.style.visibility = ("visible");
+         
+         // closeBtn.addEventListener("click", closeReturnBtn)
+         // console.log (closeReturnBtn); 
+        
       }else {
          alert("New Projec submite failed");
       }
       }catch (error) {
          console.error("Erreur :", error);
       }    
+      
    });
    postCategory();
 }
@@ -355,8 +376,8 @@ function treatFiles() {
 //2.Get and read the Files objects detail
 function readUrl(input) {
    if (input.files && input.files[0]) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
+      const newImg = new FileReader();
+      newImg.onload = function(e) {
       console.log(e);
          //4. Link the file with <img>
       previewFile.src = e.target.result;
@@ -364,17 +385,17 @@ function readUrl(input) {
       addFileBtn.style.visibility = ("hidden");
       }
       //3. Preview the file 
-      reader.readAsDataURL(input.files[0]);  
-      console.log(reader);      
+      newImg.readAsDataURL(input.files[0]);  
+      console.log(newImg);      
    }
 }
 // }
 //Choose and post the categorys
 async function postCategory () {
    try{  
-      const {categories} = await fetchData();
-      
+      const {categories} = await fetchData();     
       console.log(categories);
+      
       categories.forEach((category) => {
       const option = document.createElement('option');    
       option.value = category.id;
@@ -389,16 +410,37 @@ async function postCategory () {
 }
 
 // // Setting submit post button 
-function submitPost () {
-   submitProjectBtn.addEventListener('input', () => {
-      // if( ){
-      // }else(){
-      // };
-});
-}
+// function submitPost () {
+//    submitProjectBtn.addEventListener('input', () => {
+//       // if( ){
+//       // }else(){
+//       // };
+// });
+// }
+addFilePage();
 addNewProject();
 displayModal().then(works => {
 console.log(works);  
 }).catch(error => {
 console.error(error);
 });
+
+
+
+
+
+
+
+
+// const data = {
+      //    image: uploadFile.files[0].toDataURL(),
+      //    title: inputTitle,
+      //    category: categorySelected.category.id,
+      // }
+      // console.log('post', uploadFile.files[0]);
+      // {
+      //    image: imageEncodedEnBase64,
+      //   Category: LaCategorie,
+      //   Title: LeTitre 
+      //   }
+      // image.toDataURL()

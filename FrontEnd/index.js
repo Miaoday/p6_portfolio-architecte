@@ -21,6 +21,8 @@ const messageA = document.getElementById('message-a');
 const submitProjectBtn = document.getElementById('submit-project');
 const modalForm = document.getElementById('modal-form');
 const previewFile = document.getElementById('preview-file');
+const addPreviewFile = document.querySelector('.add-file');
+const addPreviewLabel = document.getElementById('label-img');
 const uploadFile = document.getElementById('input-file');
 const inputTitle = document.getElementById('input-file-title');
 const categorySelected = document.getElementById('selected-category');
@@ -225,9 +227,9 @@ async function addNewProject() {
 
       // Create a new object with FormData
       const data = new FormData();      
-      data.append('image:', uploadFile.files[0]);
-      data.append('title:', inputTitle.value);
-      data.append('category:', categorySelected.value);
+      data.append('image', uploadFile.files[0]);
+      data.append('title', inputTitle.value);
+      data.append('category', categorySelected.value);
 
       try {
       const response = await fetch("http://localhost:5678/api/works",{
@@ -252,12 +254,13 @@ async function addNewProject() {
        
          // dynamiser la modal apres ajouter le projet sans rafaichir la page 
          displayModal();  
-         toGalleryPage();
+         initiateForm();
+         // toGalleryPage();
          // Back to input field of project (modal form)
-
       }
       else {
-         // alert new project submited been failed");
+         console.log("Error");
+         // alert new project submited been failed
          document.getElementById('message-b').innerHTML=
          "New Projec submite failed!";
          messageB.style.display = "flex";
@@ -318,30 +321,31 @@ async function postCategory () {
    }
 }
 
-// Active input modal window
-function addFilePage(){
-addProjectBtn.addEventListener("click",() => {
-   modalGallery.style.display = "none";
-   inputModal.style.display = "block";  
-   returnBtn.style.visibility = "visible";    
-});
-}
-
-// Return to Modal Gallery
-returnBtn.addEventListener("click", toGalleryPage);
-
-function toGalleryPage () {
-   modalGallery.style.display = "block";
-   inputModal.style.display = "none";    
-   returnBtn.style.visibility = "hidden";   
-}
-
 function initiateForm () {
    previewFile.src = "";
    previewFile.style.visibility = ("hidden");
    addFileBtn.style.visibility = ("visible");
    inputTitle.value= "";
    console.log(inputTitle.value);
+}
+
+// Active input modal window
+function toFilePage(){
+addProjectBtn.addEventListener("click",() => {
+   modalGallery.style.display = "none";
+   inputModal.style.display = "block";  
+   returnBtn.style.visibility = "visible"; 
+   initiateForm();   
+});
+}
+
+// Return to Modal Gallery
+returnBtn.addEventListener("click", toGalleryPage);
+
+function toGalleryPage() {
+   modalGallery.style.display = "block";
+   inputModal.style.display = "none";    
+   returnBtn.style.visibility = "hidden";   
 }
 
 // Debug return Button
@@ -361,9 +365,19 @@ function toggleModal () {
    modalWindow.classList.toggle("active");
 
    if (!modalWindow.classList.contains('active')) {
+      // addPreviewFile.style.visibility = "hidden";
+      // addPreviewLabel.style.visibility = "hidden";
+      // returnBtn.style.visibility = "hidden";
       hideReturnBtn();
+      // initiateForm();   
    }
 }
+modalWindow.addEventListener("click",() => {
+   // addPreviewFile.style.visibility = "hidden";
+   // addPreviewLabel.style.visibility = "hidden";
+   // returnBtn.style.visibility = "hidden";
+   // hideReturnBtn();
+});
 
 // Token
 // Token status setting for login 
@@ -392,7 +406,7 @@ logInOut.addEventListener("click",(e)=>{
    logOut();
 })
 
-addFilePage();
+toFilePage();
 toGalleryPage();
 addNewProject();
 displayModal().then(works => {

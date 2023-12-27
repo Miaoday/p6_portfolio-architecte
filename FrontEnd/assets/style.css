@@ -230,6 +230,10 @@ nav li img {
    cursor: pointer;
    visibility: hidden;
 }
+/* .fa-arrow-left {
+	
+} */
+
 .close-modal {
    width: 24px;
    height: 24px;

@@ -38,7 +38,6 @@ async function getApiCategories() {
          console.log('données récupérées avec succès')
       };
       const dataCatagories = await getApiCategories.json();
-      console.log('Categories from API:', dataCatagories)
       return dataCatagories; 
    }  catch (error) {
       console.log('Fetch categories error:', error)
@@ -55,7 +54,6 @@ async function getApiWorks() {
          console.log('données récupérées avec succès')
       };
       const dataWorks = await getApiWorks.json();
-      console.log('Works from API:', dataWorks)
       return dataWorks;
    } catch (error){
       console.error('Fetch works error:', error)
@@ -64,13 +62,13 @@ async function getApiWorks() {
 // For treating the callback data
 async function fetchData() {
    try {
-     const categories = await getApiCategories(); // receive Categories Data  
-     const works = await getApiWorks(); // receive Works Data
+      const categories = await getApiCategories(); // receive Categories Data  
+      const works = await getApiWorks(); // receive Works Data
 
      // collecting all API Datas therfore retrieving by other function
-     updateGallery(works); // calling updateGallery function
-     filtreByCategories(categories,works); // calling filreByCategories function  
-     return { categories, works };
+      updateGallery(works); // calling updateGallery function
+      filtreByCategories(categories,works); // calling filreByCategories function  
+      return { categories, works };
    } 
    catch (error) {
      console.error('Error fetching data:', error);
@@ -82,15 +80,16 @@ async function fetchData() {
 function filtreByCategories (categories,works) {    
    const classment = document.getElementById("filtres"); 
    classment.innerHTML= "";
-   // create the Button 'Tous'
+   // Create the Button 'Tous'
    const allButton = document.createElement('button');
    allButton.classList.add('filtreBtn');
    allButton.innerText = 'Tous';
    allButton.setAttribute('id', 'all');
-   // attatched the elements
+   
+   // Attatched the elements
    classment.appendChild(allButton);
-
-   // use the New object Set to retreive works categorys ID
+   
+   // New object Set to retreive works categorys ID
    const sortCategoriesIds = [...new Set(works.map(work => work.categoryId))].sort((a, b) => {
       return a - b;
    }); 
@@ -102,7 +101,8 @@ function filtreByCategories (categories,works) {
       btn.classList.add('filtreBtn');
       btn.innerText = category ? category.name : 'Unknown Category';
       btn.setAttribute('id', categoryId);
-      // attatched the elements
+      
+      // Attatched the elements
       classment.appendChild(btn);
 
       btn.addEventListener('click', function() {
@@ -118,7 +118,7 @@ function filtreByCategories (categories,works) {
    allButton.addEventListener('click', function() {
       updateGallery(works);
    }); 
-
+   // While login is active, we hide the categories buttons
    document.querySelectorAll('.filtreBtn').forEach(btn => {
       if(token){
          btn.style.display = "none";
@@ -128,7 +128,7 @@ function filtreByCategories (categories,works) {
 
 // Update dynamic portfolio works of gallery
 function updateGallery (works) {
-   gallery.innerHTML = '';  // clear actual gallery elements
+   gallery.innerHTML = '';  // clear actual main page gallery elements
    works.forEach(work=> {
       const figure = document.createElement("figure");
       const figureImg = document.createElement("img");
@@ -148,14 +148,12 @@ function updateGallery (works) {
 }
 
 // Modal Window// 
-
-
 // Import the project into the Modal Window
 async function displayModal () {
    try{
       const {works} = await fetchData();  // make sure works had initiated
       console.log(works);        
-      editModal.innerHTML = '';  // clear actual gallery elements
+      editModal.innerHTML = '';  // clear actual modal window gallery elements
       works.forEach (work=> {  
          const figure = document.createElement("figure");
          const figureImg = document.createElement("img");
@@ -168,18 +166,18 @@ async function displayModal () {
          figure.className = work.categoryId;
          trashBtn.className += "fa-regular fa-trash-can";   
          trashBtn.setAttribute('id', work.id);
+
          // attatched figure into the gallery
          span.appendChild(trashBtn);
          figure.appendChild(figureImg);
          figure.appendChild(span);
          editModal.appendChild(figure);
+
          // get the trash can
          document.querySelectorAll('.fa-trash-can').forEach((trashBtn)=> {                
-            trashBtn.addEventListener('click', deleteWork)   
-            // console.log(trashBtn);             
-            // console.log('Click trashButton')                   
-         }); 
-         return works;       
+            trashBtn.addEventListener('click', deleteWork)                   
+         });         
+         // return works;           
       }); 
    }catch (error) {
       console.log(error);        
@@ -189,6 +187,7 @@ return [];
 
 // Delete the project with trashbin button
 async function deleteWork(event) {
+   // event.preventDefault();
    gallery.innerHTML = ''; 
    let id = event.target.id;
    try{
@@ -202,8 +201,9 @@ async function deleteWork(event) {
    if (response.ok){    
       document.getElementById('message-a').innerHTML=
       "Project deleted successfully!";
-      messageA.style.display = "flex";      
-      fetchData();  
+      messageA.style.display = "flex"; 
+
+      // refresh those gallerys elements     
       displayModal();
                
    } else if (response===401){
@@ -221,24 +221,23 @@ async function deleteWork(event) {
 // Add the New Project in Modal Gallery
 async function addNewProject() {
    modalForm.addEventListener("submit", async (event) => {
-      console.log(modalForm);
       event.preventDefault();
+
+      // Create a new object with FormData
       const data = new FormData();      
-      data.append('image', uploadFile.files[0]);
-      data.append('title', inputTitle.value);
-      data.append('category', categorySelected.value);
-      // console.log('image', uploadFile.files[0]);
-      // console.log('title', inputTitle.value);
-      // console.log('category', categorySelected.value);
+      data.append('image:', uploadFile.files[0]);
+      data.append('title:', inputTitle.value);
+      data.append('category:', categorySelected.value);
+
       try {
       const response = await fetch("http://localhost:5678/api/works",{
          method: "POST", 
          body: data,
          headers:{
             Authorization: `Bearer ${token}`,  
-            // "Content-Type": "multipart/form-data"
          }   
       })
+
       if (response.ok) {                          
          // Reset Modal Form
          modalForm.reset();           
@@ -247,19 +246,18 @@ async function addNewProject() {
          "New Project submited successfully!";
          messageB.style.display = "flex";
          
-         // ajout dynamique de la nouvelle image
+         // Add dynamically a new project without refresh the pages
          const newProject = await response.json();
          updateGallery([newProject]);       
        
          // dynamiser la modal apres ajouter le projet sans rafaichir la page 
          displayModal();  
-
+         toGalleryPage();
          // Back to input field of project (modal form)
-         // addFilePage();     
 
       }
       else {
-         // alert("New Projec submite failed");
+         // alert new project submited been failed");
          document.getElementById('message-b').innerHTML=
          "New Projec submite failed!";
          messageB.style.display = "flex";
@@ -269,8 +267,6 @@ async function addNewProject() {
       }         
    });
    postCategory();
-   toggleModal();
-   // addFilePage();
 }
 
 //1. Choose the file project to upload (input)
@@ -290,7 +286,8 @@ function readUrl(input) {
       const newImg = new FileReader();
       newImg.onload = function(e) {
       console.log(e);
-         //4. Link the file with <img>
+
+      //4. Link the file with <img>
       previewFile.src = e.target.result;
       previewFile.style.visibility = ("visible");
       addFileBtn.style.visibility = ("hidden");
@@ -321,48 +318,40 @@ async function postCategory () {
    }
 }
 
-// // Setting submit post button 
-
 // Active input modal window
 function addFilePage(){
 addProjectBtn.addEventListener("click",() => {
    modalGallery.style.display = "none";
    inputModal.style.display = "block";  
-   returnBtn.style.visibility = "visible";  
+   returnBtn.style.visibility = "visible";    
+});
+}
+
+// Return to Modal Gallery
+returnBtn.addEventListener("click", toGalleryPage);
+
+function toGalleryPage () {
+   modalGallery.style.display = "block";
+   inputModal.style.display = "none";    
+   returnBtn.style.visibility = "hidden";   
+}
+
+function initiateForm () {
    previewFile.src = "";
    previewFile.style.visibility = ("hidden");
    addFileBtn.style.visibility = ("visible");
    inputTitle.value= "";
    console.log(inputTitle.value);
-});
-}
-
-// Return to Modal Gallery
-function toGalleryPage() {
-returnBtn.addEventListener("click",() => {
-   console.log("coucou gallery");
-   modalGallery.style.display = "block";
-   inputModal.style.display = "none";    
-   returnBtn.style.visibility = "hidden";   
-});
 }
 
 // Debug return Button
-function noReturnBtn() {
+function hideReturnBtn() {
    closeBtn.addEventListener("click",() => {
       modalGallery.style.display = "block";
       inputModal.style.display = "none";
-      returnBtn.style.visibility = "hidden";    
-      // modalWindow.classList.toggle("active");    
-      console.log("byebye returnButton");
+      returnBtn.style.visibility = "hidden";       
    });
-}
-
-// Close Modal Window
-// function closeModalWindow(){
-//    modalWindow.style.display = "none";
-// }
- 
+} 
 
 // Modal window settings
 modalTriggers.forEach(trigger =>
@@ -370,22 +359,11 @@ modalTriggers.forEach(trigger =>
    
 function toggleModal () {
    modalWindow.classList.toggle("active");
-   if (modalWindow.classList.contains('active')) {
-      addProjectBtn.addEventListener("click",()=>{
-         returnBtn.style.visibility = "visible";
-      });          
-   }else  {
-      noReturnBtn();
+
+   if (!modalWindow.classList.contains('active')) {
+      hideReturnBtn();
    }
 }
-
-// function submitPost () {
-//    submitProjectBtn.addEventListener('input', () => {
-//       // if( ){
-//       // }else(){
-//       // };
-// });
-// }
 
 // Token
 // Token status setting for login 

@@ -401,16 +401,3 @@ console.log(works);
 console.error(error);
 });
 
-
-// const data = {
-      //    image: uploadFile.files[0].toDataURL(),
-      //    title: inputTitle,
-      //    category: categorySelected.category.id,
-      // }
-      // console.log('post', uploadFile.files[0]);
-      // {
-      //    image: imageEncodedEnBase64,
-      //   Category: LaCategorie,
-      //   Title: LeTitre 
-      //   }
-      // image.toDataURL()

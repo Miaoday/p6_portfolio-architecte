@@ -118,9 +118,9 @@ nav ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
+	gap: 44px;
 }
 nav li {
-	padding: 0 10px;
 	font-size: 1.2em;
 	font-weight: 400;
 }
@@ -157,9 +157,13 @@ nav li img {
 	flex: 1;
 }
 #introduction h2 {
-	margin-bottom: 1em;
+	text-align: start;
+	margin: 34px 0 19px 0;
+	/* margin-bottom: 1em; */
 }
 #introduction p {
+	max-width: 404px;
+	padding-bottom: 20px;
 	margin-bottom: 0.5em;
 }
 
@@ -410,7 +414,7 @@ hr {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	margin: 15px;
+	margin: 20px 0 50px;
 }
 .filtreBtn {
 	background-color: #FFFEF8;;

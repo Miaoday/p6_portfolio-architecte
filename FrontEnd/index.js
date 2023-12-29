@@ -17,6 +17,7 @@ const modalGallery = document.getElementById('modal-gallery');
 const editModal = document.getElementById('edit-modal');
 const closeBtn = document.querySelector('.close-modal');
 const addProjectBtn = document.getElementById('add-project');
+
 const inputModal = document.getElementById('input-modal');
 const returnBtn = document.querySelector('.fa-arrow-left');
 const messageA = document.getElementById('message-a');
@@ -83,6 +84,7 @@ async function fetchData() {
 // Update dynamic portfolio works of gallery
 function updateGallery (works) {
    gallery.innerHTML = '';  // clear actual main page gallery elements
+
    works.forEach(work=> {
       const figure = document.createElement("figure");
       const figureImg = document.createElement("img");
@@ -132,19 +134,18 @@ function filtreByCategories (categories,works) {
       classment.appendChild(btn);
       
       // click those categories buttons
-      btn.addEventListener('click', function(event) {
-         console.log(event)
+      btn.addEventListener('click', function() {
          const categoryIdNb = parseInt(this.getAttribute('id'));
          const worksFiltres = works.filter(work => work.categoryId === categoryIdNb);         
-         console.log('Works filtered:', worksFiltres); 
+         
          updateGallery(worksFiltres);  // calling function
          
-         // 移除所有按钮的 'filtre-selected' 类
+         // take off all the class name 'filtre-selected' 
          document.querySelectorAll('.filtreBtn').forEach(button => {
             button.classList.remove('filtre-selected');
          });
          
-         // 为当前点击的按钮添加 'filtre-selected' 类
+         // add the class name 'filtre-selected'
          this.classList.add('filtre-selected');                         
       });
    });
@@ -153,14 +154,13 @@ function filtreByCategories (categories,works) {
    allBtn.addEventListener('click', function() {
       updateGallery(works);
 
-       // 移除所有按钮的 'filtre-selected' 类
+      // take off all the class name 'filtre-selected' 
        document.querySelectorAll('.filtreBtn').forEach(button => {
          button.classList.remove('filtre-selected');
       });
       
-      // 为“全部”按钮添加 'filtre-selected' 类
+      // add the class name 'filtre-selected'
       this.classList.add('filtre-selected');
-      console.log(this);
    }); 
 
    // While login is active, we hide the categories buttons
@@ -178,6 +178,7 @@ console.log('Token value:', token)
 
 if (token){
    adminNav.style.display = "block";
+   titlePortfolio.style.flexDirection="row";
    modalButton.style.visibility = "visible";
    logInOut.innerHTML = "logout";   
 }
@@ -185,7 +186,6 @@ if (token){
 function logOut() {
 
    if(token===null){
-      console.log('Token value is null')
       window.location.replace('./login.html');
    } else {
       // clear the token
@@ -236,9 +236,9 @@ document.querySelectorAll('.js-modal').forEach(a => {
 // Import the project into the Modal Window
 async function displayModal () {
    try{
-      const {works} = await fetchData();  // make sure works had initiated
-      console.log(works);        
+      const {works} = await fetchData();  // make sure works had initiated     
       editModal.innerHTML = '';  // clear actual modal window gallery elements
+
       works.forEach (work=> {  
          const figure = document.createElement("figure");
          const figureImg = document.createElement("img");
@@ -262,7 +262,7 @@ async function displayModal () {
          document.querySelectorAll('.fa-trash-can').forEach((trashBtn)=> {                
             trashBtn.addEventListener('click', deleteWork)                   
          });         
-         // return works;           
+          
       }); 
    }catch (error) {
       console.log(error);        
@@ -274,6 +274,7 @@ return [];
 async function deleteWork(event) {
    gallery.innerHTML = ''; 
    let id = event.target.id;
+
    try{
       const response = await fetch (`http://localhost:5678/api/works/${id}`, {
       method: 'DELETE',
@@ -325,7 +326,7 @@ async function addNewProject() {
          }   
       })
 
-      if (response.ok) {                          
+      if (response.ok) {        
          // Reset Modal Form
          modalForm.reset();           
          // Submit successed message  
@@ -339,12 +340,9 @@ async function addNewProject() {
        
          // dynamiser la modal apres ajouter le projet sans rafaichir la page 
          displayModal();  
-         
-         // toGalleryPage();
-         // Back to input field of project (modal form)
       }
       else {
-         console.log("Error");
+         console.error("Error");
          // alert new project submited been failed
          document.getElementById('message-b').innerHTML=
          "New Projec submite failed!";
@@ -362,21 +360,19 @@ async function addNewProject() {
 
 //1. Choose the file project to upload (input)
 uploadFile.addEventListener("change", treatFiles, false);
-console.log(uploadFile);
 
 function treatFiles() {
    const fileListe = this.files;
    console.log(fileListe);
-   console.log(this);
    readUrl(this);
 }
 
 //2.Get and read the Files objects detail
 function readUrl(input) {
+
    if (input.files && input.files[0]) {
       const newImg = new FileReader();
       newImg.onload = function(e) {
-      console.log(e);
 
       //4. Link the file with <img>
       previewFile.src = e.target.result;
@@ -384,24 +380,23 @@ function readUrl(input) {
       addFileBtn.style.visibility = ("hidden");
       }
       //3. Preview the file 
-      newImg.readAsDataURL(input.files[0]);  
-      console.log(newImg);   
+      newImg.readAsDataURL(input.files[0]);    
       document.getElementById('input-file-title').focus();   
    }
 }
 
 //Choose and post the categorys
 async function postCategory () {
+
    try{  
       const {categories} = await fetchData();     
-      console.log(categories);
       
       categories.forEach((category) => {
       const option = document.createElement('option');    
       option.value = category.id;
       option.textContent = category.name;
       categorySelected.appendChild(option);
-      console.log(option);
+
       });    
    } 
    catch(error){
@@ -409,23 +404,22 @@ async function postCategory () {
    }
 }
 
-function initiateForm () {
+function initiateForm() {
    previewFile.src = "";
    previewFile.style.visibility = ("hidden");
    addFileBtn.style.visibility = ("visible");
    inputTitle.value= "";
-   console.log(inputTitle.value);
    messageB.style.display = "none";
 }
 
 // Active input modal window
-function toFilePage(){
-addProjectBtn.addEventListener("click",() => {
-   modalGallery.style.display = "none";
-   inputModal.style.display = "block";  
-   returnBtn.style.visibility = "visible"; 
-   initiateForm();   
-});
+function toFilePage() {
+   addProjectBtn.addEventListener("click",() => {
+      modalGallery.style.display = "none";
+      inputModal.style.display = "block";  
+      returnBtn.style.visibility = "visible"; 
+      initiateForm();   
+   });
 }
 
 // Return to Modal Gallery
@@ -440,9 +434,4 @@ function toGalleryPage() {
 toFilePage();
 toGalleryPage();
 addNewProject();
-displayModal().then(works => {
-console.log(works);  
-}).catch(error => {
-console.error(error);
-});
-
+displayModal();

@@ -31,6 +31,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	background: #FFFEF8;
 }
 ol, ul {
 	list-style: none;
@@ -60,9 +61,6 @@ a {
 	text-decoration: none;
 	color: #000;
 }
-a:hover {
-	color: #B1663C;
-}
 
 /* Admin Bar */
 #admin-nav {
@@ -71,12 +69,10 @@ a:hover {
 	width: 100vw;
 	display: none;	
 }
-
 .edition-mode {
 	text-align: center;
 	font-family: Work Sans;
 	font-size: 16px;
-	font-style: normal;
 	font-weight: 400;
 	line-height: normal;
 	color: white;
@@ -87,7 +83,6 @@ a:hover {
 }
 
 /* HEADER */
-
 header {
 	display: flex;
 	justify-content: space-between;
@@ -97,7 +92,7 @@ section {
 	margin: 50px 0;
 }
 
-h1{
+h1 {
 	display: flex;
 	flex-direction: column;
 	font-family: 'Syne';
@@ -111,7 +106,7 @@ h1 > span {
 	letter-spacing: 0.1em;
 }
 
-h2{
+h2  {
 	font-family: 'Syne';
 	font-weight: 700;
 	font-size: 30px;
@@ -127,13 +122,25 @@ nav ul {
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
+	font-weight: 400;
+}
+nav li a {
+	font-weight: 400;
+	color: rgb(59, 59, 59);
+}
+nav li a:hover {
+	font-weight: 700;
+	color: #000;	
+}
+nav li a:active {
+	font-weight: 700;
+	color: #B1663C;
 }
 nav li img {
-	width: 24px;
+	width: 22px;
 }
 
 /* Introduction Section */
-
 #introduction {
 	display: flex;
 	align-items: center;
@@ -164,13 +171,12 @@ nav li img {
 }
 .portfolio-title {
 	display: flex;
+	flex-direction: column;
     justify-content: center;
-    align-items: baseline;
-	margin-inline-start: 8em;
+	margin-inline-start: 6em;
 }
 #portfolio h2 {
 	margin-bottom: 1em;
-	/* display: flex; */
 }
 
 /* Modal Window */
@@ -183,10 +189,9 @@ nav li img {
 	font-weight: 400;
 	line-height: normal;
 	gap: 10px;
-	/* display: flex; */
+	display: flex;
 	align-items: center;
 	cursor: pointer;
-	/* display: none; */
 	visibility: hidden;
 }
 .modal-section {
@@ -202,11 +207,7 @@ nav li img {
 	top: 0;
 	left: 0;
 	background: rgba(0, 0, 0, 0.6);
-	/* visibility: hidden; */
 }
-/* .modal-window.active {
-	visibility: visible;
-} */
 .modal-wrapper {
 	background-color: white;
 	width: 100%;
@@ -261,7 +262,6 @@ h3 {
 	max-height: 140px;
 	width: 100%;
 	height: 100%;
-	
 }
 #edit-modal> figure span {
 	position: absolute;
@@ -357,7 +357,7 @@ h3 {
    padding: 2px;
    cursor: pointer;
 }
- input[type= "file" i]{
+input[type= "file" i]{
    opacity: 0;
    cursor: pointer;
    transform: translate(0px,-25px);
@@ -406,7 +406,6 @@ hr {
 }
 
 /* Filtre Button in My Projects Gallery */
-
 #filtres {
 	display: flex;
 	flex-direction: row;
@@ -414,7 +413,7 @@ hr {
 	margin: 15px;
 }
 .filtreBtn {
-	background-color: white;
+	background-color: #FFFEF8;;
 	color: #1D6154;
 	border: 1px solid #1D6154;
 	border-radius: 60px;
@@ -432,17 +431,12 @@ hr {
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
-/* .filtreBtn:hover {
-	color:white;
-	background: #0E2F28;
-} */
 .filtreBtn:active, .filtre-selected { 
 	color:white;
 	background-color: #1D6154;
 }
 
 /* GAllery Section */
-
 .gallery {
 	width: 100%;
 	display: grid;
@@ -453,9 +447,11 @@ hr {
 .gallery img {
 	width: 100%;
 }
+.gallery figcaption {
+	margin: 5px;
+}
 
 /* CONTACT SECTION */
-
 #contact {
 	width: 50%;
 	margin: auto;
@@ -492,6 +488,10 @@ hr {
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
+#contact-submit:hover {
+	background: #0E2F28;
+	cursor: pointer;
+}
 input[type="submit"] {
 	font-family: 'Syne';
 	font-weight: 700;
@@ -504,7 +504,6 @@ input[type="submit"] {
 }
 
 /* FOOTER */
-
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
@@ -516,7 +515,6 @@ footer nav ul li {
 }
 
 /* LOGIN PAGE */
-
 .login-section, h2 {
 	 text-align: center;
 	 margin: 40px;
@@ -531,7 +529,13 @@ footer nav ul li {
 	width: 40%;
 }
 .login-form a {
+	font-size: 14px;
+	font-weight: 500;
+	color: #3D3D3D;
 	text-decoration: underline;
+}
+.login-form a:hover {
+	color: #B1663C;
 }
 .error {
 	color: red;

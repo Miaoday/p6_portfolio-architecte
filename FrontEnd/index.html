@@ -46,20 +46,21 @@
 	<section id="portfolio">
       <div class="portfolio-title">
 		   <h2>Mes Projets</h2>
-		   <button id="modal-btn" class="open-modal">
+		   <button id="modal-btn">
             <i class="fa-regular fa-pen-to-square"></i>
-			   <a class="modifiers-btn modal-trigger" href="#modal">modifiers</a>	
+			   <a href="#modal" class="js-modal modal-trigger modifiers-btn">modifiers</a>	
 		   </button>
       </div>
       <!-- Fenêtre Modale -->
-      <div class="modal-section"> 
-         <aside class="modal-window modal-trigger" role="dialog" aria-labelledby="modal-window" aria-describedby="modalDialogueDescription">
-            <div class="modal-wrapper modal-trigger">
+      <div class="modal-section">  
+         <aside id="modal" class="modal-trigger modal-window" style="display:none;" aria-hidden="true" aria-modal="false" role="dialog" aria-labelledby="modal-title">
+            <div class="js-stop modal-trigger modal-wrapper ">
+               <a href="#"></a>
                <div class="modal-head-btn">
-                  <button aria-label="return modal" type="button" id="return" class="return">
+                  <button class="return modal-trigger" id="return" type="button" aria-label="return modal">
                      <i class="fa-solid fa-arrow-left modal-trigger"></i>					
                   </button>    
-                  <button aria-label="close modal" type="button" class="close-modal modal-trigger">
+                  <button class="js-close close-modal modal-trigger" type="button" aria-label="close modal">
                      <i class="fa-solid fa-xmark"></i>
                   </button> 
                </div>                      

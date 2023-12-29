@@ -7,10 +7,12 @@ const logInOut= document.getElementById('log-in-out');
 const titlePortfolio = document.querySelector('.portfolio-title');
 const modalButton = document.getElementById('modal-btn');
 const filtreBtn = document.querySelectorAll('.filtreBtn');
+const filtreSelected = document.querySelectorAll('.filtre-selected');
 
 const modalWindow = document.querySelector('.modal-window');
 const modalWrapper = document.querySelector('.modal-wrapper');
 const modalTriggers = document.querySelectorAll('.modal-trigger');
+
 const modalGallery = document.getElementById('modal-gallery');
 const editModal = document.getElementById('edit-modal');
 const closeBtn = document.querySelector('.close-modal');
@@ -77,57 +79,7 @@ async function fetchData() {
    }
 }
 
-// Home page setting
-// Classify the works with the categories buttons
-function filtreByCategories (categories,works) {    
-   const classment = document.getElementById("filtres"); 
-   classment.innerHTML= "";
-   // Create the Button 'Tous'
-   const allButton = document.createElement('button');
-   allButton.classList.add('filtreBtn');
-   allButton.innerText = 'Tous';
-   allButton.setAttribute('id', 'all');
-   
-   // Attatched the elements
-   classment.appendChild(allButton);
-   
-   // New object Set to retreive works categorys ID
-   const sortCategoriesIds = [...new Set(works.map(work => work.categoryId))].sort((a, b) => {
-      return a - b;
-   }); 
-
-   // Create catogorys buttons 
-   sortCategoriesIds.forEach(categoryId => {
-      const btn = document.createElement('button');
-      const category = categories.find(cat => cat.id === categoryId);
-      btn.classList.add('filtreBtn');
-      btn.innerText = category ? category.name : 'Unknown Category';
-      btn.setAttribute('id', categoryId);
-      
-      // Attatched the elements
-      classment.appendChild(btn);
-
-      btn.addEventListener('click', function() {
-         console.log('Button clicked')
-         const categoryIdNb = parseInt(this.getAttribute('id'));
-         const worksFiltres = works.filter(work => work.categoryId === categoryIdNb);         
-         console.log('Works filtered:', worksFiltres); 
-         // calling function
-         updateGallery(worksFiltres);        
-      });
-   });
-   // click the button 'Tous'
-   allButton.addEventListener('click', function() {
-      updateGallery(works);
-   }); 
-   // While login is active, we hide the categories buttons
-   document.querySelectorAll('.filtreBtn').forEach(btn => {
-      if(token){
-         btn.style.display = "none";
-      }
-   });
-}
-
+// Home page setting //
 // Update dynamic portfolio works of gallery
 function updateGallery (works) {
    gallery.innerHTML = '';  // clear actual main page gallery elements
@@ -149,7 +101,138 @@ function updateGallery (works) {
    });
 }
 
-// Modal Window// 
+// Classify the works with the categories buttons
+function filtreByCategories (categories,works) {    
+   const classment = document.getElementById("filtres"); 
+   classment.innerHTML= "";
+
+   // Create the "All" Button 
+   const allBtn = document.createElement('button');
+   allBtn.className += "filtreBtn";
+   allBtn.innerText = 'Tous';
+   allBtn.setAttribute('id', 'all');
+   
+   // Attatched the elements
+   classment.appendChild(allBtn);
+   
+   // New object Set to retreive works categorys ID
+   const sortCategoriesIds = [...new Set(works.map(work => work.categoryId))].sort((a, b) => {
+      return a - b;
+   }); 
+
+   sortCategoriesIds.forEach(categoryId => {
+      // create all the filtre buttons
+      const btn = document.createElement('button');
+      const category = categories.find(cat => cat.id === categoryId);
+      btn.className += "filtreBtn";
+      btn.innerText = category ? category.name : 'Unknown Category';
+      btn.setAttribute('id', categoryId);
+      
+      // Attatched the elements
+      classment.appendChild(btn);
+      
+      // click those categories buttons
+      btn.addEventListener('click', function(event) {
+         console.log(event)
+         const categoryIdNb = parseInt(this.getAttribute('id'));
+         const worksFiltres = works.filter(work => work.categoryId === categoryIdNb);         
+         console.log('Works filtered:', worksFiltres); 
+         updateGallery(worksFiltres);  // calling function
+         
+         // 移除所有按钮的 'filtre-selected' 类
+         document.querySelectorAll('.filtreBtn').forEach(button => {
+            button.classList.remove('filtre-selected');
+         });
+         
+         // 为当前点击的按钮添加 'filtre-selected' 类
+         this.classList.add('filtre-selected');                         
+      });
+   });
+
+   // click the "All" button 
+   allBtn.addEventListener('click', function() {
+      updateGallery(works);
+
+       // 移除所有按钮的 'filtre-selected' 类
+       document.querySelectorAll('.filtreBtn').forEach(button => {
+         button.classList.remove('filtre-selected');
+      });
+      
+      // 为“全部”按钮添加 'filtre-selected' 类
+      this.classList.add('filtre-selected');
+      console.log(this);
+   }); 
+
+   // While login is active, we hide the categories buttons
+   document.querySelectorAll('.filtreBtn').forEach(btn => {
+      if(token){
+         btn.style.display = "none";
+      }
+   });
+}
+
+// Token //
+// Token status setting for login 
+let token = localStorage.getItem('token');
+console.log('Token value:', token)
+
+if (token){
+   adminNav.style.display = "block";
+   modalButton.style.visibility = "visible";
+   logInOut.innerHTML = "logout";   
+}
+
+function logOut() {
+
+   if(token===null){
+      console.log('Token value is null')
+      window.location.replace('./login.html');
+   } else {
+      // clear the token
+      localStorage.clear(); 
+      window.location.replace('./index.html');
+   }
+};
+
+logInOut.addEventListener("click",(e)=>{
+   logOut();
+})
+
+// Modal Window // 
+// modal settings
+let modal = null;
+const openModal = function(e) {
+   e.preventDefault();
+   const target = document.querySelector(e.target.getAttribute('href'));
+   target.style.display = null;
+   target.removeAttribute('aria-hidden');
+   target.setAttribute('aria-modal', 'true');
+   modal = target;
+   modal.addEventListener('click', closeModal)
+   modal.querySelector('.js-close').addEventListener('click', closeModal);
+   modal.querySelector('.js-stop').addEventListener('click', stopPropagation);
+}
+
+const closeModal = function(e) {
+   if (modal === null) return ; 
+   e.preventDefault();
+   modal.style.display = "none";
+   modal.setAttribute('aria-hidden', true);
+   modal.removeAttribute('aria-modal');
+   modal.addEventListener('click', closeModal);
+   modal.querySelector('.js-close').removeEventListener('click', closeModal);
+   modal.querySelector('.js-stop').removeEventListener('click', stopPropagation);
+   modal = null;
+}
+
+const stopPropagation = function(e) {
+   e.stopPropagation()
+}
+
+document.querySelectorAll('.js-modal').forEach(a => {
+   a.addEventListener("click", openModal)
+});
+
 // Import the project into the Modal Window
 async function displayModal () {
    try{
@@ -189,7 +272,6 @@ return [];
 
 // Delete the project with trashbin button
 async function deleteWork(event) {
-   // event.preventDefault();
    gallery.innerHTML = ''; 
    let id = event.target.id;
    try{
@@ -218,6 +300,9 @@ async function deleteWork(event) {
    } catch (error) {
       console.error('Error),', error);
    }
+   setTimeout(function () {
+      messageA.style.display = "none";       
+   }, 1000);  
 }
 
 // Add the New Project in Modal Gallery
@@ -254,7 +339,7 @@ async function addNewProject() {
        
          // dynamiser la modal apres ajouter le projet sans rafaichir la page 
          displayModal();  
-         initiateForm();
+         
          // toGalleryPage();
          // Back to input field of project (modal form)
       }
@@ -267,9 +352,12 @@ async function addNewProject() {
       }
       }catch (error) {
          console.error("Erreur :", error);
-      }         
+      }   
+      setTimeout(function () {
+         initiateForm(); 
+      }, 1000);     
    });
-   postCategory();
+   postCategory();  
 }
 
 //1. Choose the file project to upload (input)
@@ -327,6 +415,7 @@ function initiateForm () {
    addFileBtn.style.visibility = ("visible");
    inputTitle.value= "";
    console.log(inputTitle.value);
+   messageB.style.display = "none";
 }
 
 // Active input modal window
@@ -347,64 +436,6 @@ function toGalleryPage() {
    inputModal.style.display = "none";    
    returnBtn.style.visibility = "hidden";   
 }
-
-// Debug return Button
-function hideReturnBtn() {
-   closeBtn.addEventListener("click",() => {
-      modalGallery.style.display = "block";
-      inputModal.style.display = "none";
-      returnBtn.style.visibility = "hidden";       
-   });
-} 
-
-// Modal window settings
-modalTriggers.forEach(trigger =>
-   trigger.addEventListener("click", toggleModal));
-   
-function toggleModal () {
-   modalWindow.classList.toggle("active");
-
-   if (!modalWindow.classList.contains('active')) {
-      // addPreviewFile.style.visibility = "hidden";
-      // addPreviewLabel.style.visibility = "hidden";
-      // returnBtn.style.visibility = "hidden";
-      hideReturnBtn();
-      // initiateForm();   
-   }
-}
-modalWindow.addEventListener("click",() => {
-   // addPreviewFile.style.visibility = "hidden";
-   // addPreviewLabel.style.visibility = "hidden";
-   // returnBtn.style.visibility = "hidden";
-   // hideReturnBtn();
-});
-
-// Token
-// Token status setting for login 
-let token = localStorage.getItem('token');
-console.log('Token value:', token)
-
-if (token){
-   adminNav.style.display = "block";
-   modalButton.style.visibility = "visible";
-   logInOut.innerHTML = "logout";   
-}
-
-function logOut() {
-
-   if(token===null){
-      console.log('Token value is null')
-      window.location.replace('./login.html');
-   } else {
-      // clear the token
-      localStorage.clear(); 
-      window.location.replace('./index.html');
-   }
-};
-
-logInOut.addEventListener("click",(e)=>{
-   logOut();
-})
 
 toFilePage();
 toGalleryPage();

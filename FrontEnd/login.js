@@ -40,6 +40,7 @@ async function loginRequest(userData) {
 
 // click submit and send request to server 
 submit.addEventListener('click', (e)=>{
+   console.log(e);
    e.preventDefault();
    const userEmail = email.value;
    const userPassword = password.value;

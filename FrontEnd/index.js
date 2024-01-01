@@ -24,8 +24,8 @@ const messageA = document.getElementById('message-a');
 const submitProjectBtn = document.getElementById('submit-project');
 const modalForm = document.getElementById('modal-form');
 const previewFile = document.getElementById('preview-file');
-const addPreviewFile = document.querySelector('.add-file');
-const addPreviewLabel = document.getElementById('label-img');
+const labelPreviewImg = document.getElementById('label-img');
+const spanPreviewImg = document.querySelector('span');
 const uploadFile = document.getElementById('input-file');
 const inputTitle = document.getElementById('input-file-title');
 const categorySelected = document.getElementById('selected-category');
@@ -39,9 +39,7 @@ async function getApiCategories() {
       if (!getApiCategories.ok) {
         throw Error('Network response was not ok');
       }
-      else if (getApiCategories.ok) {
-         console.log('données récupérées avec succès')
-      };
+
       const dataCatagories = await getApiCategories.json();
       return dataCatagories; 
    }  catch (error) {
@@ -55,9 +53,7 @@ async function getApiWorks() {
       if (!getApiWorks.ok) {
          throw Error('Works request failed');
       }
-      else if (getApiWorks.ok) {
-         console.log('données récupérées avec succès')
-      };
+
       const dataWorks = await getApiWorks.json();
       return dataWorks;
    } catch (error){
@@ -69,7 +65,6 @@ async function fetchData() {
    try {
       const categories = await getApiCategories(); // receive Categories Data  
       const works = await getApiWorks(); // receive Works Data
-
      // collecting all API Datas therfore retrieving by other function
       updateGallery(works); // calling updateGallery function
       filtreByCategories(categories,works); // calling filreByCategories function  
@@ -178,7 +173,8 @@ console.log('Token value:', token)
 
 if (token){
    adminNav.style.display = "block";
-   titlePortfolio.style.flexDirection="row";
+   titlePortfolio.style.flexDirection= "row";
+   titlePortfolio.style.marginInlineStart= "6em";
    modalButton.style.visibility = "visible";
    logInOut.innerHTML = "logout";   
 }
@@ -226,7 +222,7 @@ const closeModal = function(e) {
 }
 
 const stopPropagation = function(e) {
-   e.stopPropagation()
+   e.stopPropagation();
 }
 
 document.querySelectorAll('.js-modal').forEach(a => {
@@ -292,8 +288,14 @@ async function deleteWork(event) {
       displayModal();
                
    } else if (response===401){
+      document.getElementById('message-a').innerHTML=
+      "You do not have permission to delete this image!";
+      messageA.style.display = "flex"; 
       console.error('Unauthorized: You do not have permission to delete this image.');            
    } else if(response===500){
+      document.getElementById('message-a').innerHTML=
+      "Unexpected Behavior!";
+      messageA.style.display = "flex"; 
       console.error('Unexpected Behavior:', response.status);
    } else {
       console.error('Delete failed :', response.status);
@@ -377,7 +379,7 @@ function readUrl(input) {
       //4. Link the file with <img>
       previewFile.src = e.target.result;
       previewFile.style.visibility = ("visible");
-      addFileBtn.style.visibility = ("hidden");
+      labelPreviewImg.style.visibility = ("hidden");
       }
       //3. Preview the file 
       newImg.readAsDataURL(input.files[0]);    
@@ -391,6 +393,13 @@ async function postCategory () {
    try{  
       const {categories} = await fetchData();     
       
+       // Ajouter l'option par défaut
+       const defaultOption = document.createElement('option');
+       defaultOption.value = ""; 
+       defaultOption.selected = true;  
+       defaultOption.hidden = true;
+       categorySelected.appendChild(defaultOption);
+
       categories.forEach((category) => {
       const option = document.createElement('option');    
       option.value = category.id;
@@ -407,7 +416,7 @@ async function postCategory () {
 function initiateForm() {
    previewFile.src = "";
    previewFile.style.visibility = ("hidden");
-   addFileBtn.style.visibility = ("visible");
+   labelPreviewImg.style.visibility = ("visible");
    inputTitle.value= "";
    messageB.style.display = "none";
 }

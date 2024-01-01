@@ -1,1 +1,5 @@
-https://github.com/Miaoday/p6_portfolio-architecte.git
+GitHub 
+https://github.com/Miaoday/p6_portfolio-architecte.git  
+
+GitHub Pages
+https://miaoday.github.io/p6_portfolio-architecte/FrontEnd/index.html

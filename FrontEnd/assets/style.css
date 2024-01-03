@@ -211,7 +211,7 @@ nav li img {
 }
 .modal-wrapper {
 	background-color: white;
-	width: 60%;
+	width: 50%;
 	max-width: 630px;
 	max-height: 670px;
 	border-radius: 10px;
@@ -275,8 +275,8 @@ h3 {
 	text-align: center;
    cursor: pointer;
 	position: absolute;
-   top: 8px;
-   right: 16px;
+   top: 5px;
+   right: 12px;
 }
 #input-modal{
 	margin: 0 90px;
@@ -334,7 +334,7 @@ h3 {
 }
 #preview-file {
    max-width: 129px;
-   max-height: 193px; 
+   max-height: 190px; 
    width: 100%;
    height: 100%;
    position: absolute;
@@ -397,12 +397,11 @@ hr {
 	font-weight: 700;
 	color: white;
 	margin : 2em auto;
+}
+.submit-novalid{
 	background-color: #A7A7A7;
 }
-#submit-project:hover{
-	background-color: #1D6154;
-}
-#submit-project:active{
+.submit-valid {
 	background-color: #1D6154;
 }
 
@@ -528,6 +527,7 @@ footer nav ul li {
 }
 .login-form label {
 	width: 40%;
+	text-align: left;
 }
 .login-form a {
 	font-size: 14px;

@@ -16,12 +16,12 @@ const modalTriggers = document.querySelectorAll('.modal-trigger');
 const modalGallery = document.getElementById('modal-gallery');
 const editModal = document.getElementById('edit-modal');
 const closeBtn = document.querySelector('.close-modal');
+const messageA = document.getElementById('message-a');
 const addProjectBtn = document.getElementById('add-project');
 
 const inputModal = document.getElementById('input-modal');
 const returnBtn = document.querySelector('.fa-arrow-left');
-const messageA = document.getElementById('message-a');
-const submitProjectBtn = document.getElementById('submit-project');
+
 const modalForm = document.getElementById('modal-form');
 const previewFile = document.getElementById('preview-file');
 const labelPreviewImg = document.getElementById('label-img');
@@ -30,7 +30,7 @@ const uploadFile = document.getElementById('input-file');
 const inputTitle = document.getElementById('input-file-title');
 const categorySelected = document.getElementById('selected-category');
 const messageB = document.getElementById('message-b');
-const addFileBtn = document.querySelector('.add-file')
+const submitProjectBtn = document.getElementById('submit-project');
 
 // Get the Categories from API
 async function getApiCategories() {  
@@ -199,6 +199,7 @@ logInOut.addEventListener("click",(e)=>{
 let modal = null;
 const openModal = function(e) {
    e.preventDefault();
+   initiateForm();
    const target = document.querySelector(e.target.getAttribute('href'));
    target.style.display = null;
    target.removeAttribute('aria-hidden');
@@ -350,14 +351,15 @@ async function addNewProject() {
          "New Projec submite failed!";
          messageB.style.display = "flex";
       }
-      }catch (error) {
+      } catch (error) {
          console.error("Erreur :", error);
       }   
+
       setTimeout(function () {
          initiateForm(); 
       }, 1000);     
    });
-   postCategory();  
+   postCategory();    
 }
 
 //1. Choose the file project to upload (input)
@@ -440,6 +442,23 @@ function toGalleryPage() {
    returnBtn.style.visibility = "hidden";   
 }
 
+function inputsValidate() {
+
+   modalForm.addEventListener("input", () => {
+      console.log(modalForm);
+      if(uploadFile.files.length > 0 && inputTitle.value.trim()!== "" && categorySelected.value!== "") {
+         console.log(uploadFile.files.length > 0 && inputTitle.value.trim()!== "" && categorySelected.value !== "");
+         submitProjectBtn.classList.remove("submit-novalid");
+         submitProjectBtn.classList.add("submit-valid");
+         console.log(submitProjectBtn);
+      }
+      else {
+         submitProjectBtn.classList.add("submit-novalid");
+         submitProjectBtn.classList.remove("submit-valid");
+      }
+   });
+}
+inputsValidate();
 toFilePage();
 toGalleryPage();
 addNewProject();

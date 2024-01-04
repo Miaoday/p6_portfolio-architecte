@@ -21,7 +21,6 @@ const addProjectBtn = document.getElementById('add-project');
 
 const inputModal = document.getElementById('input-modal');
 const returnBtn = document.querySelector('.fa-arrow-left');
-
 const modalForm = document.getElementById('modal-form');
 const previewFile = document.getElementById('preview-file');
 const labelPreviewImg = document.getElementById('label-img');
@@ -421,6 +420,7 @@ function initiateForm() {
    labelPreviewImg.style.visibility = ("visible");
    inputTitle.value= "";
    messageB.style.display = "none";
+   categorySelected.value = "";
 }
 
 // Active input modal window

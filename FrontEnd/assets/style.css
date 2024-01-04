@@ -213,7 +213,7 @@ nav li img {
 	background-color: white;
 	width: 50%;
 	max-width: 630px;
-	max-height: 670px;
+	max-height: 688px;
 	border-radius: 10px;
 	padding: 30px;
 	overflow-y: auto;
@@ -275,8 +275,8 @@ h3 {
 	text-align: center;
    cursor: pointer;
 	position: absolute;
-   top: 5px;
-   right: 12px;
+   top: 4px;
+   right: 14px;
 }
 #input-modal{
 	margin: 0 90px;

@@ -239,6 +239,9 @@ nav li img {
 	background: none;
 	cursor: pointer;
 }
+#modal-gallery{
+	text-align: center;
+}
 h3 {
 	text-align: center;
 	font-family: Work Sans;
@@ -276,7 +279,7 @@ h3 {
    cursor: pointer;
 	position: absolute;
    top: 4px;
-   right: 14px;
+   right: 8px;
 }
 #input-modal{
 	margin: 0 105px;

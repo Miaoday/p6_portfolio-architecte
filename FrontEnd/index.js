@@ -421,6 +421,9 @@ function initiateForm() {
    inputTitle.value= "";
    messageB.style.display = "none";
    categorySelected.value = "";
+   submitProjectBtn.classList.add("submit-novalid");
+   submitProjectBtn.classList.remove("submit-valid");
+   
 }
 
 // Active input modal window

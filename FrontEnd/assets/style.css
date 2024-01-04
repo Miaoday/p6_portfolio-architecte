@@ -279,7 +279,7 @@ h3 {
    right: 14px;
 }
 #input-modal{
-	margin: 0 90px;
+	margin: 0 105px;
 	display: none;
 }
 #message-a, #message-b {	
@@ -309,7 +309,8 @@ h3 {
 	cursor: pointer;
 }
 .input-file-box {
-	max-height: 170px;
+	
+	max-height: 169px;
 	border-radius: 3px;
 	background: #E8F1F6;	
 	display: flex;
@@ -464,6 +465,7 @@ hr {
 }
 #contact form,
 .modal-window form {
+	max-width: 420px;
 	text-align: left;
 	margin-top: 30px;
 	display: flex;

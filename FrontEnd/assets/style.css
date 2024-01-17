@@ -1,6 +1,6 @@
 /* http://meyerweb.com/eric/tools/css/reset/
-   v2.0 | 20110126
-   License: none (public domain)
+	v2.0 | 20110126
+	License: none (public domain)
 */
 
 html, body, div, span, applet, object, iframe,
@@ -312,7 +312,6 @@ h3 {
 	cursor: pointer;
 }
 .input-file-box {
-	
 	max-height: 169px;
 	border-radius: 3px;
 	background: #E8F1F6;	
@@ -457,7 +456,7 @@ hr {
 
 /* CONTACT SECTION */
 #contact {
-	width: 50%;
+	width: 40%;
 	margin: auto;
 }
 #contact > * {
@@ -468,7 +467,7 @@ hr {
 }
 #contact form,
 .modal-window form {
-	max-width: 420px;
+   /* max-width: 535px; */
 	text-align: left;
 	margin-top: 30px;
 	display: flex;
@@ -493,6 +492,9 @@ hr {
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
+#contact-submit {
+   width: 42%;
+}
 #contact-submit:hover {
 	background: #0E2F28;
 	cursor: pointer;
@@ -509,6 +511,11 @@ input[type="submit"] {
 }
 
 /* FOOTER */
+footer {
+   background-color: white;
+   height: 60px;
+   width: 100%;
+}
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
@@ -521,8 +528,8 @@ footer nav ul li {
 
 /* LOGIN PAGE */
 .login-section, h2 {
-	 text-align: center;
-	 margin: 40px;
+	text-align: center;
+	margin: 40px;
 }
 .login-form {
 	display: flex;

@@ -1,4 +1,4 @@
-// LogingPage
+// LoginPage
 const errorMessage = document.getElementById('error-message');
 const email = document.getElementById('emailInput');
 const password = document.getElementById('passwordInput');
@@ -8,7 +8,8 @@ const submit = document.getElementById('submitConnected');
 async function loginRequest(userData) {
    try { 
       let response = await fetch ('http://localhost:5678/api/users/login', {
-         method : "POST",
+         // request de Post pour avoir l'authentification d'user
+         method : "POST",    
          headers : {"Content-Type": "application/json;charset=utf-8"},
          body : JSON.stringify(userData)
       });

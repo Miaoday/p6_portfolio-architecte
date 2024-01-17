@@ -36,7 +36,7 @@ async function getApiCategories() {
    try {
       const getApiCategories = await fetch('http://localhost:5678/api/categories');
       if (!getApiCategories.ok) {
-        throw Error('Network response was not ok');
+         throw Error('Network response was not ok');
       }
 
       const dataCatagories = await getApiCategories.json();
@@ -64,13 +64,13 @@ async function fetchData() {
    try {
       const categories = await getApiCategories(); // receive Categories Data  
       const works = await getApiWorks(); // receive Works Data
-     // collecting all API Datas therfore retrieving by other function
+     // collecting all API Data therefore retrieving by other function
       updateGallery(works); // calling updateGallery function
-      filtreByCategories(categories,works); // calling filreByCategories function  
+      filtreByCategories(categories,works); // calling filtreByCategories function  
       return { categories, works };
    } 
    catch (error) {
-     console.error('Error fetching data:', error);
+      console.error('Error fetching data:', error);
    }
 }
 
@@ -90,7 +90,7 @@ function updateGallery (works) {
       figure.className = work.categoryId;
       figcaption.innerText = work.title;
 
-      // attatched figure into the gallery
+      // attached figure into the gallery
       figure.appendChild(figureImg);
       figure.appendChild(figcaption);
       gallery.appendChild(figure);
@@ -108,33 +108,32 @@ function filtreByCategories (categories,works) {
    allBtn.innerText = 'Tous';
    allBtn.setAttribute('id', 'all');
    
-   // Attatched the elements
+   // Attached the elements
    classment.appendChild(allBtn);
    
-   // New object Set to retreive works categorys ID
-   const sortCategoriesIds = [...new Set(works.map(work => work.categoryId))].sort((a, b) => {
-      return a - b;
-   }); 
+   // New object Set to retrieve works category's ID
+   const sortCategoriesIds = [...new Set(works.map(function(work){return work.categoryId} ))]
+   .sort(function (a, b) {return a - b;}); 
 
-   sortCategoriesIds.forEach(categoryId => {
+   sortCategoriesIds.forEach(function(categoryId) {
       // create all the filtre buttons
       const btn = document.createElement('button');
-      const category = categories.find(cat => cat.id === categoryId);
+      const category = categories.find(function(cat){return cat.id === categoryId;});
       btn.className += "filtreBtn";
       btn.innerText = category ? category.name : 'Unknown Category';
       btn.setAttribute('id', categoryId);
       
-      // Attatched the elements
+      // Attached the elements
       classment.appendChild(btn);
       
       // click those categories buttons
       btn.addEventListener('click', function() {
          const categoryIdNb = parseInt(this.getAttribute('id'));
-         const worksFiltres = works.filter(work => work.categoryId === categoryIdNb);         
+         const worksFiltres = works.filter(function(work) {return work.categoryId === categoryIdNb;});         
          
          updateGallery(worksFiltres);  // calling function
          
-         // take off all the class name 'filtre-selected' 
+         // take off all the class 'filtre-selected' 
          document.querySelectorAll('.filtreBtn').forEach(button => {
             button.classList.remove('filtre-selected');
          });
@@ -148,13 +147,14 @@ function filtreByCategories (categories,works) {
    allBtn.addEventListener('click', function() {
       updateGallery(works);
 
-      // take off all the class name 'filtre-selected' 
-       document.querySelectorAll('.filtreBtn').forEach(button => {
-         button.classList.remove('filtre-selected');
-      });
+   // take off all the class name 'filtre-selected' 
+   document.querySelectorAll('.filtreBtn').forEach(button => {
+      button.classList.remove('filtre-selected');
+   });
       
-      // add the class name 'filtre-selected'
-      this.classList.add('filtre-selected');
+   // add the class name 'filtre-selected'
+   this.classList.add('filtre-selected');
+
    }); 
 
    // While login is active, we hide the categories buttons
@@ -179,7 +179,6 @@ if (token){
 }
 
 function logOut() {
-
    if(token===null){
       window.location.replace('./login.html');
    } else {
@@ -196,7 +195,7 @@ logInOut.addEventListener("click",(e)=>{
 // Modal Window // 
 // modal settings
 let modal = null;
-const openModal = function(e) {
+function openModal (e) {
    e.preventDefault();
    initiateForm();
    const target = document.querySelector(e.target.getAttribute('href'));
@@ -209,7 +208,7 @@ const openModal = function(e) {
    modal.querySelector('.js-stop').addEventListener('click', stopPropagation);
 }
 
-const closeModal = function(e) {
+function closeModal (e) {
    if (modal === null) return ; 
    e.preventDefault();
    modal.style.display = "none";
@@ -221,7 +220,7 @@ const closeModal = function(e) {
    modal = null;
 }
 
-const stopPropagation = function(e) {
+function stopPropagation (e) {
    e.stopPropagation();
 }
 
@@ -248,7 +247,7 @@ async function displayModal () {
          trashBtn.className += "fa-regular fa-trash-can";   
          trashBtn.setAttribute('id', work.id);
 
-         // attatched figure into the gallery
+         // attached figure into the gallery
          span.appendChild(trashBtn);
          figure.appendChild(figureImg);
          figure.appendChild(span);
@@ -258,7 +257,6 @@ async function displayModal () {
          document.querySelectorAll('.fa-trash-can').forEach((trashBtn)=> {                
             trashBtn.addEventListener('click', deleteWork)                   
          });         
-          
       }); 
    }catch (error) {
       console.log(error);        
@@ -266,7 +264,7 @@ async function displayModal () {
 return [];  
 }
 
-// Delete the project with trashbin button
+// Delete the project with trashcan button
 async function deleteWork(event) {
    gallery.innerHTML = ''; 
    let id = event.target.id;
@@ -284,7 +282,7 @@ async function deleteWork(event) {
       "Project deleted successfully!";
       messageA.style.display = "flex"; 
 
-      // refresh those gallerys elements     
+      // refresh gallery's elements     
       displayModal();
                
    } else if (response===401){
@@ -331,27 +329,26 @@ async function addNewProject() {
       if (response.ok) {        
          // Reset Modal Form
          modalForm.reset();           
-         // Submit successed message  
+         // Submit succeed message  
          document.getElementById('message-b').innerHTML=
-         "New Project submited successfully!";
+         "New Project submit successfully!";
          messageB.style.display = "flex";
          
          // Add dynamically a new project without refresh the pages
          const newProject = await response.json();
          updateGallery([newProject]);       
-       
-         // dynamiser la modal apres ajouter le projet sans rafaichir la page 
+         // dynamite modal without refresh the page 
          displayModal();  
       }
       else {
          console.error("Error");
-         // alert new project submited been failed
+         // alert new project submit been failed
          document.getElementById('message-b').innerHTML=
-         "New Projec submite failed!";
+         "New Project submit failed!";
          messageB.style.display = "flex";
       }
       } catch (error) {
-         console.error("Erreur :", error);
+         console.error("Error :", error);
       }   
 
       setTimeout(function () {
@@ -388,18 +385,18 @@ function readUrl(input) {
    }
 }
 
-//Choose and post the categorys
+//Choose and post category
 async function postCategory () {
 
    try{  
       const {categories} = await fetchData();     
       
-       // Ajouter l'option par défaut
-       const defaultOption = document.createElement('option');
-       defaultOption.value = ""; 
-       defaultOption.selected = true;  
-       defaultOption.hidden = true;
-       categorySelected.appendChild(defaultOption);
+       // Add option as presetting
+      const defaultOption = document.createElement('option');
+      defaultOption.value = ""; 
+      defaultOption.selected = true;  
+      defaultOption.hidden = true;
+      categorySelected.appendChild(defaultOption);
 
       categories.forEach((category) => {
       const option = document.createElement('option');    
@@ -419,7 +416,7 @@ function initiateForm() {
    previewFile.style.visibility = ("hidden");
    labelPreviewImg.style.visibility = ("visible");
    inputTitle.value= "";
-   messageB.style.display = "none";
+   messageB.style.display ="none";
    categorySelected.value = "";
    submitProjectBtn.classList.add("submit-novalid");
    submitProjectBtn.classList.remove("submit-valid");
